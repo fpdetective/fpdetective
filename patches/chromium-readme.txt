@@ -13,3 +13,13 @@ patch -p0 < chromium.patch
 build/gyp_chromium -Dwerror= -D remove_webcore_debug_symbols=1 
 ninja -C out/Release chrome
 4) If you want to move Chromium to another directory, you also need to copy .pak files and locales directory from out/Release directory.
+
+
+List of logged events include:
+-------------------------------------
+-font load attempts by intercepting calls to CSSFontFace::getFontData and CSSFontSelector::getFontData methods
+-access to the following navigator properties and methods: userAgent, appCodeName, product, productSub, vendor, vendorSub, onLine, appVersion, language, plugins, mimeTypes, cookieEnabled(), javaEnabled()
+-access to navigator.plugins: name, filename, description, length
+-access to navigator.mimeTypes: enabledPlugin, description, suffixes, type
+-window.screen properties: horizontalDPI,verticalDPI, height, width, colorDepth, pixelDepth, availLeft, availTop, availHeight, availWidth
+-access to offsetWidth and offsetHeight properties and getBoundingRect method of HTML elements.
