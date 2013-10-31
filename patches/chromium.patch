@@ -1,0 +1,961 @@
+Index: Source/core/dom/Element.cpp
+===================================================================
+--- Source/core/dom/Element.cpp	(revision 159695)
++++ Source/core/dom/Element.cpp	(working copy)
+@@ -588,6 +588,9 @@
+ 
+ int Element::offsetWidth()
+ {
++#ifdef LOG_MODS_FP
++    logFPCalls(0, "Element::offsetWidth", document().url());
++#endif
+     document().updateStyleForNodeIfNeeded(this);
+ 
+     if (RenderBox* renderer = renderBox()) {
+@@ -603,6 +606,9 @@
+ 
+ int Element::offsetHeight()
+ {
++#ifdef LOG_MODS_FP
++    logFPCalls(0, "Element::offsetHeight", document().url());
++#endif
+     document().partialUpdateLayoutIgnorePendingStylesheets(this);
+     if (RenderBoxModelObject* renderer = renderBoxModelObject())
+         return adjustLayoutUnitForAbsoluteZoom(renderer->pixelSnappedOffsetHeight(), renderer).round();
+@@ -845,6 +851,9 @@
+ 
+ PassRefPtr<ClientRect> Element::getBoundingClientRect()
+ {
++#ifdef LOG_MODS_FP
++    logFPCalls(0, "Element::getBoundingClientRect", document().url());
++#endif
+     document().updateLayoutIgnorePendingStylesheets();
+ 
+     Vector<FloatQuad> quads;
+Index: Source/core/plugins/DOMMimeTypeArray.cpp
+===================================================================
+--- Source/core/plugins/DOMMimeTypeArray.cpp	(revision 159695)
++++ Source/core/plugins/DOMMimeTypeArray.cpp	(working copy)
+@@ -42,6 +42,9 @@
+     PluginData* data = getPluginData();
+     if (!data)
+         return 0;
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, String("DOMMimeTypeArray::length-") + String::number(data->mimes().size()));
++#endif
+     return data->mimes().size();
+ }
+ 
+@@ -50,6 +53,12 @@
+     PluginData* data = getPluginData();
+     if (!data)
+         return 0;
++
++#ifdef LOG_MODS_FP
++    String log_str = String("DOMMimeTypeArray::item-") +  String::number(index);     
++    logFPCalls(m_frame, log_str);
++#endif
++
+     const Vector<MimeClassInfo>& mimes = data->mimes();
+     if (index >= mimes.size())
+         return 0;
+@@ -74,6 +83,13 @@
+     PluginData *data = getPluginData();
+     if (!data)
+         return 0;
++
++#ifdef LOG_MODS_FP
++    String propName = propertyName;
++    String log_str = String("DOMMimeTypeArray::namedItem: ") + propName;
++    logFPCalls(m_frame, log_str);
++#endif
++
+     const Vector<MimeClassInfo>& mimes = data->mimes();
+     for (unsigned i = 0; i < mimes.size(); ++i) {
+         if (mimes[i].type == propertyName)
+Index: Source/core/plugins/DOMMimeType.cpp
+===================================================================
+--- Source/core/plugins/DOMMimeType.cpp	(revision 159695)
++++ Source/core/plugins/DOMMimeType.cpp	(working copy)
+@@ -42,6 +42,9 @@
+ 
+ const String &DOMMimeType::type() const
+ {
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, String("DOMMimeType::type:") + mimeClassInfo().type);
++#endif
+     return mimeClassInfo().type;
+ }
+ 
+@@ -55,11 +58,18 @@
+             builder.append(',');
+         builder.append(extensions[i]);
+     }
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, String("DOMMimeType::suffixes:") + builder.toString());
++#endif
+     return builder.toString();
+ }
+ 
+ const String &DOMMimeType::description() const
+ {
++#ifdef LOG_MODS_FP
++    const String& descript = mimeClassInfo().desc;
++    logFPCalls(m_frame, String("DOMMimeType::description:") + descript);
++#endif
+     return mimeClassInfo().desc;
+ }
+ 
+@@ -68,6 +78,9 @@
+     if (!m_frame || !m_frame->page() || !m_frame->page()->mainFrame()->loader()->allowPlugins(NotAboutToInstantiatePlugin))
+         return 0;
+ 
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, String("DOMMimeType::enabledPlugin:") + String::number(m_index));
++#endif
+     return DOMPlugin::create(m_pluginData.get(), m_frame, m_pluginData->mimePluginIndices()[m_index]);
+ }
+ 
+Index: Source/core/plugins/DOMPluginArray.cpp
+===================================================================
+--- Source/core/plugins/DOMPluginArray.cpp	(revision 159695)
++++ Source/core/plugins/DOMPluginArray.cpp	(working copy)
+@@ -43,6 +43,9 @@
+     PluginData* data = pluginData();
+     if (!data)
+         return 0;
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, String("DOMPluginArray::length: ") + String::number(data->plugins().size()));
++#endif
+     return data->plugins().size();
+ }
+ 
+@@ -51,6 +54,9 @@
+     PluginData* data = pluginData();
+     if (!data)
+         return 0;
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, String("DOMPluginArray::item: ") + String::number(index));
++#endif
+     const Vector<PluginInfo>& plugins = data->plugins();
+     if (index >= plugins.size())
+         return 0;
+@@ -75,6 +81,9 @@
+     PluginData* data = pluginData();
+     if (!data)
+         return 0;
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, String("DOMPluginArray::namedItem: ") + propertyName);
++#endif
+     const Vector<PluginInfo>& plugins = data->plugins();
+     for (unsigned i = 0; i < plugins.size(); ++i) {
+         if (plugins[i].name == propertyName)
+@@ -92,6 +101,9 @@
+ {
+     if (!m_frame)
+         return 0;
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, String("DOMPluginArray::pluginData"));
++#endif
+     Page* page = m_frame->page();
+     if (!page)
+         return 0;
+Index: Source/core/plugins/DOMPlugin.cpp
+===================================================================
+--- Source/core/plugins/DOMPlugin.cpp	(revision 159695)
++++ Source/core/plugins/DOMPlugin.cpp	(working copy)
+@@ -22,6 +22,10 @@
+ #include "core/plugins/PluginData.h"
+ #include "wtf/text/AtomicString.h"
+ 
++#ifdef LOG_MODS_FP
++#include "core/frame/Frame.h"
++#endif
++
+ namespace WebCore {
+ 
+ DOMPlugin::DOMPlugin(PluginData* pluginData, Frame* frame, unsigned index)
+@@ -38,21 +42,36 @@
+ 
+ String DOMPlugin::name() const
+ {
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, String("DOMPlugin::name: ") + pluginInfo().name);
++#endif
+     return pluginInfo().name;
+ }
+ 
+ String DOMPlugin::filename() const
+ {
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, String("DOMPlugin::filename: ") + pluginInfo().file);
++#endif    
+     return pluginInfo().file;
+ }
+ 
+ String DOMPlugin::description() const
+ {
++#ifdef LOG_MODS_FP
++    if(pluginInfo().desc.length())
++        logFPCalls(m_frame, String("DOMPlugin::description: ") + pluginInfo().desc);
++    else
++        logFPCalls(m_frame, String("DOMPlugin::description: "));
++#endif
+     return pluginInfo().desc;
+ }
+ 
+ unsigned DOMPlugin::length() const
+ {
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, String("DOMPlugin::length: ") + String::number(pluginInfo().mimes.size()));
++#endif
+     return pluginInfo().mimes.size();
+ }
+ 
+@@ -60,7 +79,9 @@
+ {
+     if (index >= pluginInfo().mimes.size())
+         return 0;
+-
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, String("DOMPlugin::item: ") + String::number(index));
++#endif
+     const MimeClassInfo& mime = pluginInfo().mimes[index];
+ 
+     const Vector<MimeClassInfo>& mimes = m_pluginData->mimes();
+@@ -82,6 +103,9 @@
+ 
+ PassRefPtr<DOMMimeType> DOMPlugin::namedItem(const AtomicString& propertyName)
+ {
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, String("DOMPlugin::namedItem: ") + propertyName);
++#endif
+     const Vector<MimeClassInfo>& mimes = m_pluginData->mimes();
+     for (unsigned i = 0; i < mimes.size(); ++i)
+         if (mimes[i].type == propertyName)
+Index: Source/core/css/CSSFontSelector.cpp
+===================================================================
+--- Source/core/css/CSSFontSelector.cpp	(revision 159695)
++++ Source/core/css/CSSFontSelector.cpp	(working copy)
+@@ -156,6 +156,14 @@
+     if (!m_document || !m_document->frame())
+         return 0;
+ 
++#ifdef LOG_MODS_FP
++    String fontFamName = familyName.string();
++    if(!fontFamName.startsWith("data:")){
++    	String log_str = String("CSSFontSelector::getFontData ") + fontFamName;
++    	logFPCalls(0, log_str,  m_document->url());
++    }
++#endif
++
+     return m_cssSegmentedFontFaceCache.getFontData(m_document->frame()->settings(), fontDescription, familyName);
+ }
+ 
+Index: Source/core/css/CSSFontFace.cpp
+===================================================================
+--- Source/core/css/CSSFontFace.cpp	(revision 159695)
++++ Source/core/css/CSSFontFace.cpp	(working copy)
+@@ -34,6 +34,12 @@
+ #include "core/page/UseCounter.h"
+ #include "core/platform/graphics/SimpleFontData.h"
+ 
++#ifdef LOG_MODS_FP
++#include "core/platform/graphics/FontDescription.h"
++#include "base/logging.h"
++#include "core/frame/Frame.h"
++#endif
++
+ namespace WebCore {
+ 
+ bool CSSFontFace::isLoaded() const
+@@ -124,6 +130,32 @@
+                 setLoadStatus(FontFace::Loading);
+             if (loadStatus() == FontFace::Loading && m_sources[i]->isLoaded())
+                 setLoadStatus(FontFace::Loaded);
++
++#ifdef LOG_MODS_FP
++            /*
++             * Here we log which local font is loaded for a particular font-face
++             * e.g. for the following CSS @font-face rule...
++             *
++             * 		@font-face {
++             * 			font-family: FontFaceName;
++             * 			src: local("Georgia");
++             * 		}
++             *
++             * we'd have logs like the ones below:
++             *
++             * 		CSSFontSelector::getFontData FontFaceName (this line comes from CSSFontSelector.cpp)
++             * 		CSSFontFace::getFontData FontFaceName->Georgia (log from below lines)
++             *
++             * which would mean local font Georgia is loaded for font-face named "FontFaceName".             *
++             *
++             * */
++            Document* document = m_segmentedFontFace->fontSelector()->document();
++            String famName = m_activeSource->string();
++            if(!famName.startsWith("data:")){
++                String log_str = String("CSSFontFace::getFontData ") + fontDescription.family().family() + "->" +  famName;
++                logFPCalls(0, log_str, document->url());
++            }
++#endif
+             return result.release();
+         }
+     }
+Index: Source/core/frame/DOMWindow.cpp
+===================================================================
+--- Source/core/frame/DOMWindow.cpp	(revision 159695)
++++ Source/core/frame/DOMWindow.cpp	(working copy)
+@@ -516,7 +516,9 @@
+ {
+     if (!m_frame)
+         return 0;
+-
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "DOMWindow::orientation");
++#endif
+     return m_frame->orientation();
+ }
+ #endif
+@@ -527,6 +529,9 @@
+         return 0;
+     if (!m_screen)
+         m_screen = Screen::create(m_frame);
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "DOMWindow::screen");
++#endif
+     return m_screen.get();
+ }
+ 
+@@ -536,6 +541,9 @@
+         return 0;
+     if (!m_history)
+         m_history = History::create(m_frame);
++#ifdef LOG_MODS_FP_SUPERVERBOSE
++    logFPCalls(m_frame, "DOMWindow::history");
++#endif
+     return m_history.get();
+ }
+ 
+@@ -545,6 +553,9 @@
+         return 0;
+     if (!m_locationbar)
+         m_locationbar = BarProp::create(m_frame, BarProp::Locationbar);
++#ifdef LOG_MODS_FP_SUPERVERBOSE
++    logFPCalls(m_frame, "DOMWindow::locationbar");
++#endif
+     return m_locationbar.get();
+ }
+ 
+@@ -554,6 +565,9 @@
+         return 0;
+     if (!m_menubar)
+         m_menubar = BarProp::create(m_frame, BarProp::Menubar);
++#ifdef LOG_MODS_FP_SUPERVERBOSE
++    logFPCalls(m_frame, "DOMWindow::menubar");
++#endif
+     return m_menubar.get();
+ }
+ 
+@@ -563,6 +577,9 @@
+         return 0;
+     if (!m_personalbar)
+         m_personalbar = BarProp::create(m_frame, BarProp::Personalbar);
++#ifdef LOG_MODS_FP_SUPERVERBOSE
++    logFPCalls(m_frame, "DOMWindow::personalbar");
++#endif
+     return m_personalbar.get();
+ }
+ 
+@@ -572,6 +589,9 @@
+         return 0;
+     if (!m_scrollbars)
+         m_scrollbars = BarProp::create(m_frame, BarProp::Scrollbars);
++#ifdef LOG_MODS_FP_SUPERVERBOSE
++    logFPCalls(m_frame, "DOMWindow::scrollbars");
++#endif
+     return m_scrollbars.get();
+ }
+ 
+@@ -581,6 +601,9 @@
+         return 0;
+     if (!m_statusbar)
+         m_statusbar = BarProp::create(m_frame, BarProp::Statusbar);
++#ifdef LOG_MODS_FP_SUPERVERBOSE
++    logFPCalls(m_frame, "DOMWindow::statusbar");
++#endif
+     return m_statusbar.get();
+ }
+ 
+@@ -590,6 +613,9 @@
+         return 0;
+     if (!m_toolbar)
+         m_toolbar = BarProp::create(m_frame, BarProp::Toolbar);
++#ifdef LOG_MODS_FP_SUPERVERBOSE
++    logFPCalls(m_frame, "DOMWindow::toolbar");
++#endif
+     return m_toolbar.get();
+ }
+ 
+@@ -599,6 +625,9 @@
+         return 0;
+     if (!m_console)
+         m_console = Console::create(m_frame);
++#ifdef LOG_MODS_FP_SUPERVERBOSE
++    logFPCalls(m_frame, "DOMWindow::console");
++#endif
+     return m_console.get();
+ }
+ 
+@@ -918,7 +947,10 @@
+ {
+     if (!m_frame)
+         return;
+-
++#ifdef LOG_MODS_FP
++    String log_msg = "DOMWindow::alert " + message;
++    logFPCalls(m_frame, log_msg );
++#endif
+     m_frame->document()->updateStyleIfNeeded();
+ 
+     Page* page = m_frame->page();
+@@ -932,7 +964,10 @@
+ {
+     if (!m_frame)
+         return false;
+-
++#ifdef LOG_MODS_FP
++    String log_msg = "DOMWindow::confirm " + message;
++    logFPCalls(m_frame, log_msg);
++#endif
+     m_frame->document()->updateStyleIfNeeded();
+ 
+     Page* page = m_frame->page();
+@@ -946,7 +981,10 @@
+ {
+     if (!m_frame)
+         return String();
+-
++#ifdef LOG_MODS_FP
++    String log_str = "DOMWindow::prompt " + message;
++    logFPCalls(m_frame, log_str);
++#endif
+     m_frame->document()->updateStyleIfNeeded();
+ 
+     Page* page = m_frame->page();
+@@ -971,6 +1009,9 @@
+ 
+ bool DOMWindow::offscreenBuffering() const
+ {
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "DOMWindow::offscreenBuffering");
++#endif
+     return true;
+ }
+ 
+@@ -983,6 +1024,9 @@
+     if (!page)
+         return 0;
+ 
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "DOMWindow::outerHeight");
++#endif
+     if (page->settings().reportScreenSizeInPhysicalPixelsQuirk())
+         return lroundf(page->chrome().windowRect().height() * page->deviceScaleFactor());
+     return static_cast<int>(page->chrome().windowRect().height());
+@@ -997,6 +1041,9 @@
+     if (!page)
+         return 0;
+ 
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "DOMWindow::outerWidth");
++#endif
+     if (page->settings().reportScreenSizeInPhysicalPixelsQuirk())
+         return lroundf(page->chrome().windowRect().width() * page->deviceScaleFactor());
+     return static_cast<int>(page->chrome().windowRect().width());
+@@ -1010,6 +1057,9 @@
+     FrameView* view = m_frame->view();
+     if (!view)
+         return 0;
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "DOMWindow::innerHeight");
++#endif
+ 
+     // FIXME: This is potentially too much work. We really only need to know the dimensions of the parent frame's renderer.
+     if (Frame* parent = m_frame->tree()->parent())
+@@ -1027,6 +1077,10 @@
+     if (!view)
+         return 0;
+ 
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "DOMWindow::innerWidth");
++#endif
++
+     // FIXME: This is potentially too much work. We really only need to know the dimensions of the parent frame's renderer.
+     if (Frame* parent = m_frame->tree()->parent())
+         parent->document()->updateLayoutIgnorePendingStylesheets();
+@@ -1043,6 +1097,9 @@
+     if (!page)
+         return 0;
+ 
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "DOMWindow::screenX");
++#endif
+     if (page->settings().reportScreenSizeInPhysicalPixelsQuirk())
+         return lroundf(page->chrome().windowRect().x() * page->deviceScaleFactor());
+     return static_cast<int>(page->chrome().windowRect().x());
+@@ -1057,6 +1114,9 @@
+     if (!page)
+         return 0;
+ 
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "DOMWindow::screenY");
++#endif
+     if (page->settings().reportScreenSizeInPhysicalPixelsQuirk())
+         return lroundf(page->chrome().windowRect().y() * page->deviceScaleFactor());
+     return static_cast<int>(page->chrome().windowRect().y());
+@@ -1099,7 +1159,9 @@
+ {
+     if (!isCurrentlyDisplayedInFrame())
+         return 0;
+-
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "DOMWindow::length");
++#endif
+     return m_frame->tree()->scopedChildCount();
+ }
+ 
+@@ -1107,7 +1169,10 @@
+ {
+     if (!m_frame)
+         return String();
+-
++#ifdef LOG_MODS_FP_SUPERVERBOSE
++    String log_str = String("DOMWindow::name " + m_frame->tree()->name()); // some pages use window.name for storage - bloats the log
++    logFPCalls(m_frame, log_str);
++#endif
+     return m_frame->tree()->name();
+ }
+ 
+@@ -1115,7 +1180,10 @@
+ {
+     if (!m_frame)
+         return;
+-
++#ifdef LOG_MODS_FP_SUPERVERBOSE
++    String log_str = String("DOMWindow::setName " + string);
++    logFPCalls(m_frame, log_str);
++#endif
+     m_frame->tree()->setName(string);
+     m_frame->loader()->client()->didChangeName(string);
+ }
+@@ -1270,7 +1338,9 @@
+ {
+     if (!m_frame)
+         return 0.0;
+-
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "DOMWindow::devicePixelRatio");
++#endif
+     return m_frame->devicePixelRatio();
+ }
+ 
+@@ -1591,7 +1661,10 @@
+     const KURL& activeWindowURL = activeWindow->document()->url();
+     if (activeWindowURL.isNull())
+         return String();
+-
++#ifdef LOG_MODS_FP
++    String log_str = String("DOMWindow::crossDomainAccessErrorMessage " + activeWindowURL.string());
++    logFPCalls(m_frame, log_str);
++#endif
+     ASSERT(!activeWindow->document()->securityOrigin()->canAccess(document()->securityOrigin()));
+ 
+     SecurityOrigin* activeOrigin = activeWindow->document()->securityOrigin();
+@@ -1670,6 +1743,7 @@
+ PassRefPtr<DOMWindow> DOMWindow::open(const String& urlString, const AtomicString& frameName, const String& windowFeaturesString,
+     DOMWindow* activeWindow, DOMWindow* firstWindow)
+ {
++
+     if (!isCurrentlyDisplayedInFrame())
+         return 0;
+     Document* activeDocument = activeWindow->document();
+@@ -1679,6 +1753,11 @@
+     if (!firstFrame)
+         return 0;
+ 
++#ifdef LOG_MODS_FP
++    String log_str = String("DOMWindow::open " + urlString);
++    logFPCalls(m_frame, log_str);
++#endif
++
+     if (!firstWindow->allowPopUp()) {
+         // Because FrameTree::find() returns true for empty strings, we must check for empty frame names.
+         // Otherwise, illegitimate window.open() calls with no name will pass right through the popup blocker.
+@@ -1727,6 +1806,7 @@
+ void DOMWindow::showModalDialog(const String& urlString, const String& dialogFeaturesString,
+     DOMWindow* activeWindow, DOMWindow* firstWindow, PrepareDialogFunction function, void* functionContext)
+ {
++
+     if (!isCurrentlyDisplayedInFrame())
+         return;
+     Frame* activeFrame = activeWindow->frame();
+@@ -1736,6 +1816,11 @@
+     if (!firstFrame)
+         return;
+ 
++#ifdef LOG_MODS_FP
++    String log_str = String("DOMWindow::showModalDialog " + urlString);
++    logFPCalls(m_frame, log_str);
++#endif
++
+     if (!canShowModalDialogNow(m_frame) || !firstWindow->allowPopUp())
+         return;
+ 
+Index: Source/core/frame/NavigatorID.cpp
+===================================================================
+--- Source/core/frame/NavigatorID.cpp	(revision 159695)
++++ Source/core/frame/NavigatorID.cpp	(working copy)
+@@ -39,6 +39,10 @@
+ #include <sys/utsname.h>
+ #endif
+ 
++#ifdef LOG_MODS_FP
++#include "core/frame/Frame.h" // to access logFPCalls method
++#endif
++
+ #ifndef WEBCORE_NAVIGATOR_PRODUCT
+ #define WEBCORE_NAVIGATOR_PRODUCT "Gecko"
+ #endif // ifndef WEBCORE_NAVIGATOR_PRODUCT
+@@ -47,6 +51,9 @@
+ 
+ String NavigatorID::appName(const NavigatorBase*)
+ {
++#ifdef LOG_MODS_FP
++    logFPCalls(0, "Navigator::appName");    
++#endif
+     return "Netscape";
+ }
+ 
+@@ -54,6 +61,9 @@
+ {
+     // Version is everything in the user agent string past the "Mozilla/" prefix.
+     const String& agent = navigator->userAgent();
++#ifdef LOG_MODS_FP
++    logFPCalls(0, "Navigator::appVersion");    
++#endif
+     return agent.substring(agent.find('/') + 1);
+ }
+ 
+@@ -64,6 +74,9 @@
+ 
+ String NavigatorID::platform(const NavigatorBase*)
+ {
++#ifdef LOG_MODS_FP
++    logFPCalls(0, "Navigator::platform");    
++#endif
+ #if defined(WEBCORE_NAVIGATOR_PLATFORM)
+     return WEBCORE_NAVIGATOR_PLATFORM;
+ #elif OS(MACOSX)
+@@ -81,11 +94,17 @@
+ 
+ String NavigatorID::appCodeName(const NavigatorBase*)
+ {
++#ifdef LOG_MODS_FP
++    logFPCalls(0, "Navigator::appCodeName");    
++#endif
+     return "Mozilla";
+ }
+ 
+ String NavigatorID::product(const NavigatorBase*)
+ {
++#ifdef LOG_MODS_FP
++    logFPCalls(0, "Navigator::product");    
++#endif
+     return WEBCORE_NAVIGATOR_PRODUCT;
+ }
+ 
+Index: Source/core/frame/Screen.cpp
+===================================================================
+--- Source/core/frame/Screen.cpp	(revision 159695)
++++ Source/core/frame/Screen.cpp	(working copy)
+@@ -38,6 +38,10 @@
+ #include "core/platform/PlatformScreen.h"
+ #include "platform/geometry/FloatRect.h"
+ 
++#ifdef LOG_MODS_FP
++#include "base/logging.h"  // !!! gunes for logging
++#endif
++
+ namespace WebCore {
+ 
+ Screen::Screen(Frame* frame)
+@@ -50,6 +54,11 @@
+ {
+     if (!m_frame)
+         return 0;
++
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "Screen::height");
++#endif
++
+     Page* page = m_frame->page();
+     if (page && page->settings().reportScreenSizeInPhysicalPixelsQuirk())
+         return lroundf(screenRect(m_frame->view()).height() * page->deviceScaleFactor());
+@@ -60,6 +69,11 @@
+ {
+     if (!m_frame)
+         return 0;
++
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "Screen::width");
++#endif
++
+     Page* page = m_frame->page();
+     if (page && page->settings().reportScreenSizeInPhysicalPixelsQuirk())
+         return lroundf(screenRect(m_frame->view()).width() * page->deviceScaleFactor());
+@@ -70,6 +84,10 @@
+ {
+     if (!m_frame)
+         return 0;
++
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "Screen::colorDepth");
++#endif
+     return static_cast<unsigned>(screenDepth(m_frame->view()));
+ }
+ 
+@@ -77,6 +95,11 @@
+ {
+     if (!m_frame)
+         return 0;
++
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "Screen::pixelDepth");
++#endif
++
+     return static_cast<unsigned>(screenDepth(m_frame->view()));
+ }
+ 
+@@ -84,6 +107,11 @@
+ {
+     if (!m_frame)
+         return 0;
++
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "Screen::availLeft");
++#endif
++
+     Page* page = m_frame->page();
+     if (page && page->settings().reportScreenSizeInPhysicalPixelsQuirk())
+         return lroundf(screenAvailableRect(m_frame->view()).x() * page->deviceScaleFactor());
+@@ -92,8 +120,14 @@
+ 
+ int Screen::availTop() const
+ {
++
+     if (!m_frame)
+         return 0;
++
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "Screen::availTop");
++#endif
++
+     Page* page = m_frame->page();
+     if (page && page->settings().reportScreenSizeInPhysicalPixelsQuirk())
+         return lroundf(screenAvailableRect(m_frame->view()).y() * page->deviceScaleFactor());
+@@ -102,8 +136,14 @@
+ 
+ unsigned Screen::availHeight() const
+ {
++
+     if (!m_frame)
+         return 0;
++
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "Screen::availHeight");
++#endif
++
+     Page* page = m_frame->page();
+     if (page && page->settings().reportScreenSizeInPhysicalPixelsQuirk())
+         return lroundf(screenAvailableRect(m_frame->view()).height() * page->deviceScaleFactor());
+@@ -112,8 +152,14 @@
+ 
+ unsigned Screen::availWidth() const
+ {
++
+     if (!m_frame)
+         return 0;
++
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "Screen::availWidth");
++#endif
++
+     Page* page = m_frame->page();
+     if (page && page->settings().reportScreenSizeInPhysicalPixelsQuirk())
+         return lroundf(screenAvailableRect(m_frame->view()).width() * page->deviceScaleFactor());
+Index: Source/core/frame/Navigator.cpp
+===================================================================
+--- Source/core/frame/Navigator.cpp	(revision 159695)
++++ Source/core/frame/Navigator.cpp	(working copy)
+@@ -88,21 +88,33 @@
+ 
+ String Navigator::language() const
+ {
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "Navigator::language");    
++#endif
+     return defaultLanguage();
+ }
+ 
+ String Navigator::productSub() const
+ {
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "Navigator::productSub");
++#endif
+     return WEBCORE_NAVIGATOR_PRODUCT_SUB;
+ }
+ 
+ String Navigator::vendor() const
+ {
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "Navigator::vendor");    
++#endif
+     return WEBCORE_NAVIGATOR_VENDOR;
+ }
+ 
+ String Navigator::vendorSub() const
+ {
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "Navigator::vendorSub");    
++#endif
+     return WEBCORE_NAVIGATOR_VENDOR_SUB;
+ }
+ 
+@@ -116,11 +128,17 @@
+     if (!m_frame->page())
+         return String();
+ 
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "Navigator::userAgent", m_frame->document()->url());
++#endif
+     return m_frame->loader()->userAgent(m_frame->document()->url());
+ }
+ 
+ DOMPluginArray* Navigator::plugins() const
+ {
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "Navigator::plugins");
++#endif
+     if (!m_plugins)
+         m_plugins = DOMPluginArray::create(m_frame);
+     return m_plugins.get();
+@@ -128,6 +146,9 @@
+ 
+ DOMMimeTypeArray* Navigator::mimeTypes() const
+ {
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "Navigator::mimeTypes");
++#endif
+     if (!m_mimeTypes)
+         m_mimeTypes = DOMMimeTypeArray::create(m_frame);
+     return m_mimeTypes.get();
+@@ -138,6 +159,9 @@
+     if (!m_frame)
+         return false;
+ 
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "Navigator::cookieEnabled");
++#endif
+     if (m_frame->page() && !m_frame->page()->settings().cookieEnabled())
+         return false;
+ 
+@@ -149,6 +173,9 @@
+     if (!m_frame || !m_frame->settings())
+         return false;
+ 
++#ifdef LOG_MODS_FP
++    logFPCalls(m_frame, "Navigator::javaEnabled");
++#endif
+     if (!m_frame->settings()->isJavaEnabled())
+         return false;
+ 
+Index: Source/core/frame/Frame.cpp
+===================================================================
+--- Source/core/frame/Frame.cpp	(revision 159695)
++++ Source/core/frame/Frame.cpp	(working copy)
+@@ -69,10 +69,46 @@
+ #include "wtf/RefCountedLeakCounter.h"
+ #include "wtf/StdLibExtras.h"
+ 
++#ifdef LOG_MODS_FP
++#include "base/logging.h"  // !!! gunes for logging
++#endif
++
+ using namespace std;
+ 
+ namespace WebCore {
+ 
++#ifdef LOG_MODS_FP
++void logFPCalls(Frame* p_frame, String log_str, String url){
++    /* 
++    * Print logs with current document and script URLs
++    */
++	if (p_frame)
++		url = getUrls(p_frame); // if we've a frame pointer get the document and script URL (if exists)
++
++	VLOG(1) << ">>>FPLOG " <<  log_str.utf8().data() << " onURL: " << url.utf8().data();
++}
++
++String getUrls(Frame* p_frame){
++    /* 
++     * Return document and script URLs if possible
++     * We don't have access to this frame pointer from all files we 
++     * want to log from (e.g. NavigatorID or those within the CSS module)
++     */
++    
++	if (!p_frame || !p_frame->page() || !p_frame->document())		
++        return String();
++    
++	String doc_url = p_frame->document()->url();
++	const String* js_url = p_frame->script()->sourceURL();
++	String url;
++	if(!js_url)
++		url = doc_url;  // we only know the document URL - e.g. inline JS
++	else
++		url = doc_url + " onJSURL: " + *js_url; // we know the script URL
++	return url;
++}
++#endif
++
+ using namespace HTMLNames;
+ 
+ DEFINE_DEBUG_ONLY_GLOBAL(WTF::RefCountedLeakCounter, frameCounter, ("Frame"));
+Index: Source/core/frame/Frame.h
+===================================================================
+--- Source/core/frame/Frame.h	(revision 159695)
++++ Source/core/frame/Frame.h	(working copy)
+@@ -39,6 +39,10 @@
+ 
+ namespace WebCore {
+ 
++#ifdef LOG_MODS_FP
++    String getUrls(Frame* p_frame);
++    void logFPCalls(Frame* p_frame, String log_str, String url="");
++#endif
+     class AnimationController;
+     class Color;
+     class DOMWindow;
+Index: Source/config.h
+===================================================================
+--- Source/config.h	(revision 159695)
++++ Source/config.h	(working copy)
+@@ -28,6 +28,8 @@
+ #define _USE_MATH_DEFINES // Make math.h behave like other platforms.
+ #endif
+ 
++#define LOG_MODS_FP 1 // gunes: enables vlogs, esp. for release build 
++
+ /* ==== Platform adaptation macros: these describe properties of the target environment. ==== */
+ 
+ /* HAVE() - specific system features (headers, functions or similar) that are present or not */
