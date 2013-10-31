@@ -1,6 +1,6 @@
 Instructions for patching and building Chromium:
 -------------------------------------
-Apply our patch to PhantomJS source code to log fingerprinting related events.
+Apply our patch to Chromium source code to log fingerprinting related events.
 
 1) Checkout and build Chromium by following the instructions at http://code.google.com/p/chromium/wiki/LinuxBuildInstructions (for Linux)
 2) Make sure you're able to build the release binary without applying the patch (following commands worked for us)
