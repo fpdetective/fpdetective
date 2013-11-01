@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `swf_obj` (
   `local_path` varchar(1024) NOT NULL,
   `domain` varchar(512) NOT NULL,
   `page_url` varchar(4096) NOT NULL,
-  `iframe_url` varchar(4096) NOT NULL,
+  `duplicate` tinyint(1) NOT NULL DEFAULT '0',
   `swf_url` varchar(4096) NOT NULL,
   `occ_vector` varchar(512) NOT NULL,
   `feat_vector` varchar(512) NOT NULL,
