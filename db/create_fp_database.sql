@@ -121,6 +121,14 @@ CREATE TABLE IF NOT EXISTS `swf_obj` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=347976 ;
 
 -- -----------------------------------------------------------
+-- DB for testing
+CREATE DATABASE `fp_detective_test` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `fp_detective_test`;
+
+CREATE TABLE IF NOT EXISTS `crawl_job` LIKE fp_detective.crawl_job;
+CREATE TABLE IF NOT EXISTS `js_info` LIKE fp_detective.js_info;
+CREATE TABLE IF NOT EXISTS `site_info` LIKE fp_detective.site_info;
+CREATE TABLE IF NOT EXISTS `swf_obj` LIKE fp_detective.swf_obj;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
