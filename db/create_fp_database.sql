@@ -122,37 +122,6 @@ CREATE TABLE IF NOT EXISTS `swf_obj` (
 
 -- -----------------------------------------------------------
 
---
--- Table structure for table `swf_src`
---
-
-CREATE TABLE IF NOT EXISTS `swf_src` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `swf_id` int(11) NOT NULL,
-  `local_path` varchar(1024) NOT NULL,
-  `source` text NOT NULL,
-  `occ_vector` varchar(512) NOT NULL,
-  `feat_vector` varchar(512) NOT NULL,
-  `hash` varchar(512) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `swf_id` (`swf_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- -----------------------------------------------------------
-
---
--- Table structure for table `websites`
---
-
-CREATE TABLE IF NOT EXISTS `websites` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `url` varchar(512) NOT NULL COMMENT 'url of the site',
-  `rank` int(10) unsigned NOT NULL,
-  `category` varchar(1024) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `category` (`category`(255))
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=102009 ;
-
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
