@@ -1,7 +1,7 @@
 Only clone VM
 ---------------------------------
 In case you only want to use the VM, you can just clone this part of the repository by
-   git clone https://github.com/fpdetective/fpdetective/vm.git
+   svn checkout https://github.com/fpdetective/fpdetective/vm
 
 Instructions for setting up VM
 ---------------------------------
