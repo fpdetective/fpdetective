@@ -1,7 +1,7 @@
 Only clone VM
 ---------------------------------
 In case you only want to use the VM, you can just clone this part of the repository by
-   svn checkout https://github.com/fpdetective/fpdetective/vm
+   svn checkout https://github.com/fpdetective/fpdetective/trunk/vm .
 
 Instructions for setting up VM
 ---------------------------------
@@ -12,7 +12,6 @@ Instructions for setting up VM
 5. Change the working directory to GUI or noGUI depending on whether you want to run the VM in GUI or GUI-less mode respectively.
 6. Run vagrant up in this folder and wait until the bootstrap script is finished.
 7. In case you're using the GUI-less mode, you can run vagrant ssh in order to SSH to VM and start using FPDetective.
-
 
 Credentials
 ---------------------------------
