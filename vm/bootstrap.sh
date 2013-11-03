@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
-sudo apt-get install git-core
+
+# Update repositories
+sudo apt-get update
+sudo apt-get upgrade
+
+# Install git
+sudo apt-get -y install --yes --force-yes git-core
 git clone https://github.com/fpdetective/fpdetective/fpdetective
 cd fpdetective
 sh setup.sh
