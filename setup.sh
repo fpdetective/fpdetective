@@ -11,24 +11,11 @@ sudo pip install mitmproxy
 sudo pip install pyOpenssl
 sudo pip install selenium
 
-# setting alias #TODO: do we need all of them?
-#echo alias follow_fp_log='tail -f ~/fpbase/run/logs/latest' >> ~/.bashrc
-#echo alias go_latest_job='cd ~/fpbase/run/jobs/latest' >> ~/.bashrc
-#echo alias go_fp_src='cd ~/fpbase/src/crawler' >> ~/.bashrc
-#source ~/.bashrc
 
-# build fpdetective directory
-#mkdir /home/vagrant/fpbase
-#mkdir /home/vagrant/fpbase/src
-#mkdir /home/vagrant/fpbase/src/crawler
-#mkdir /home/vagrant/fpbase/run
-#mkdir /home/vagrant/fpbase/run/jobs
-#mkdir /home/vagrant/fpbase/run/logs
-
-# create symbolic link
+# Create symbolic link
 ln -s `pwd` ~/fpbase
 
-# Install mysql server and phpmyadmin preventing password propmt and setting it to 'fpdetective'
+# Install mysql server and phpmyadmin preventing password propmt by setting password beforehand ('fpdetective')
 echo 'mysql-server-5.5 mysql-server/root_password password fpdetective' | sudo debconf-set-selections
 echo 'mysql-server-5.5 mysql-server/root_password_again password fpdetective' | sudo debconf-set-selections
 echo 'phpmyadmin phpmyadmin/dbconfig-install boolean true' | debconf-set-selections
@@ -43,7 +30,7 @@ sudo apt-get -y install --yes --force-yes mysql-server phpmyadmin
 # Generate mysql schema
 mysql -u root --password=fpdetective < db/create_fp_database.sql
 
-# download alexa top 1m
+# Download alexa top 1m
 cd run
 wget http://s3.amazonaws.com/alexa-static/top-1m.csv.zip
 unzip top-1m.csv.zip
