@@ -12,7 +12,7 @@ Instructions for setting up VM
 Only checkout VM
 ---------------------------------
 In case you only want to use the VM, you can just checkout this part of the repository by
-   svn checkout https://github.com/fpdetective/fpdetective/trunk/vm .
+   svn checkout https://github.com/fpdetective/fpdetective/trunk/vm vm
 
 Credentials
 ---------------------------------
