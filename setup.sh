@@ -26,7 +26,7 @@ sudo pip install selenium
 #mkdir /home/vagrant/fpbase/run/logs
 
 # create symbolic link
-ln -s . ~/fpbase
+ln -s `pwd` ~/fpbase
 
 # Install mysql server and phpmyadmin preventing password propmt and setting it to 'fpdetective'
 echo 'mysql-server-5.5 mysql-server/root_password password fpdetective' | sudo debconf-set-selections
