@@ -1,17 +1,19 @@
-
 import sqlite3
 import MySQLdb as mdb
 from time import time
 from common import FPDDBException
 from contextlib import closing
 from log import wl_log
-
+#############################################
 DB_IP_ADDRESS = 'localhost'
+DB_USERNAME = 'root'
+DB_PASSWD = 'fpdetective' # set your database password
+#############################################
 
 def mysql_init_db(db_name='fp_detective'):
     db_conn = None
     try:
-        db_conn = mdb.connect(DB_IP_ADDRESS, 'root',  '1q2w3e4r', db_name); #!!! mustreplace
+        db_conn = mdb.connect(DB_IP_ADDRESS, DB_USERNAME, DB_PASSWD, db_name);
     except mdb.Error, e:  
         print "Error %d: %s" % (e.args[0],e.args[1])
 
