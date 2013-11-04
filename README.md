@@ -16,6 +16,11 @@ A framework for conducting large scale web privacy studies.
 * Check out recent binary [releases](https://github.com/fpdetective/phantomjs/releases).
 * Consult [PhantomJS wiki](https://github.com/ariya/phantomjs/wiki) to learn more about PhantomJS
 
+### FPDetective on VM
+You can follow these instructions to set up a VM and use FPDetective independently of the configuration of your operating system:
+
+* [Instructions for setting up VM](https://github.com/fpdetective/fpdetective/wiki/Instructions-for-setting-up-VM)
+
 ### Patches for Chromium & PhantomJS browser
 You can use following patches to build FPDetective browsers from source. Consult instructions for further explanation.
  
