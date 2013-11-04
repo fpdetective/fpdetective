@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `crawl_job` (
   `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `finish_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=486 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- -----------------------------------------------------------
 
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `js_info` (
   KEY `crawl_id` (`crawl_id`),
   KEY `rank` (`rank`),
   KEY `num_font_loads` (`num_font_loads`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3274646 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- -----------------------------------------------------------
 
@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `site_info` (
   KEY `js_info_id` (`crawl_id`),
   KEY `rank` (`rank`),
   KEY `fp_detected` (`fp_detected`(255))
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3299278 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- -----------------------------------------------------------
 
@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `swf_obj` (
   KEY `crawl_id` (`crawl_id`),
   KEY `site_info_id` (`site_info_id`),
   KEY `hash` (`hash`(255))
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=347976 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- -----------------------------------------------------------
 -- DB for testing
