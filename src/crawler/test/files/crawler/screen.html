@@ -1,0 +1,15 @@
+<html>
+<head>
+<title>Screen Test</title>
+</head>
+<body>
+<script>
+(function(){
+    var w = screen.width;
+    var h = screen.height;
+    document.write(w + 'x' + h);
+    window.location.replace(window.location+'#'+w+'x'+h); // Test script will check if we logged the correct dimensions 
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<head>
+<title>Font-face Unicode test</title>
+<style>
+@font-face {
+    font-family: FontFaceName;
+    src: local("微软雅");
+}
+
+@font-face {
+    font-family: 微软;
+    src: local("微软雅黑");
+}
+
+@font-face {
+    font-family: Font1;
+    src: local("Georgia"),local("Georgia"), local("Georgia");
+}
+@font-face {
+    font-family: Tahoma;
+    src: local("LocalFontTahomeRepl");
+}
+</style>
+</head>
+<body>
+<p style="font-family:FontFaceName">微软雅黑</p>
+<p style="font-family:微软">微软</p>
+<p style="font-family:Arial">Arial</p>
+<p style="font-family:Nonexistent">Nonexistent</p>
+<p style="font-family:Font1">Font1</p>
+<p style="font-family:Tahoma">Tahoma</p>
+</body>
+</html>
