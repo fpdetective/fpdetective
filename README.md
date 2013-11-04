@@ -4,6 +4,11 @@ STILL UNDER CONSTRUCTION!
 
 A framework for conducting large scale web privacy studies.
 
+## Installation
+* `git clone https://github.com/fpdetective/fpdetective.git`
+* `cd fpdetective`
+* `./setup.sh`
+
 ## Get Started
 * Check [documentation](https://github.com/fpdetective/fpdetective/wiki)
 * Visit [FPDetective website](https://www.cosic.esat.kuleuven.be/fpdetective/).
