@@ -49,8 +49,6 @@ sudo rm -f phantomjsm64.tar.gz
 
 # setup chromium64
 cd ..
-mkdir chromium64
-cd chromium64
 wget https://github.com/fpdetective/phantomjs/releases/download/v1.9/chromium64.tar.gz
 tar -xzf chromium64.tar.gz
 sudo rm -f chromium64.tar.gz
@@ -69,13 +67,13 @@ mkdir ffdec
 cd ffdec
 wget http://www.free-decompiler.com/flash/download/ffdec_1.7.3u2.zip
 unzip ffdec_1.7.3u2.zip
+sudo rm -f ffdec_1.7.3u2.zip
 
 cd ..
-mkdir casperjs
-cd casperjs
 wget https://github.com/n1k0/casperjs/zipball/1.0.3
-unzip n1k0-casperjs-1.0.3-0-g76fc831.zip
+unzip 1.0.3
 mv n1k0-casperjs-76fc831/ casperjs
+rm 1.0.3
 
 cd ../..
 
