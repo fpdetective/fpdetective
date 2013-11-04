@@ -10,4 +10,4 @@ git clone git://github.com/fpdetective/fpdetective.git
 cd fpdetective
 sh setup.sh
 
-echo "The  bootstrap script has finished."
+echo "The bootstrap script has finished."
