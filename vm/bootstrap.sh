@@ -6,7 +6,7 @@ sudo apt-get upgrade
 
 # Install git
 sudo apt-get -y install --yes --force-yes git-core
-git clone https://github.com/fpdetective/fpdetective/fpdetective
+git clone https://github.com/fpdetective/fpdetective/fpdetective.git
 cd fpdetective
 sh setup.sh
 
