@@ -1,8 +1,8 @@
-
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 import unittest
 import swfutils as swfu
 import dbutils as dbu
-import fileutils as fu
 from fpdtest import FPDTest
 import MySQLdb as mdb
 
@@ -147,6 +147,7 @@ class Test(FPDTest):
 
         
         
+   
 if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.testName']
+    #import sys;sys.argv = ['', 'Test.test_init_db']
     unittest.main()

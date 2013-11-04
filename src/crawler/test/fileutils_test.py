@@ -1,6 +1,6 @@
-
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 import unittest
-import os
 import inspect
 import fileutils as fu
 import utils as ut
@@ -162,7 +162,7 @@ class Test(FPDTest):
         self.assertEqual(fu.get_out_filename_from_url(url, prefix), '%s-http-youtube-com.txt' % (prefix))
         self.assertEqual(fu.get_out_filename_from_url(url, prefix, '.txt'), '%s-http-youtube-com.txt' % (prefix))
         self.assertEqual(fu.get_out_filename_from_url(url, prefix, '.log'), '%s-http-youtube-com.log' % (prefix))
-
+   
 if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.testName']
+    #import sys;sys.argv = ['', 'Test.test_init_db']
     unittest.main()

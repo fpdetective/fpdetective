@@ -1,3 +1,5 @@
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 import unittest
 import webutils as wu 
 from fpdtest import FPDTest
@@ -66,10 +68,7 @@ class WebUtilsTest(FPDTest):
         top_5_10 = list(wu.gen_url_list(10, 5))
         self.assertEqual(len(top_5_10), 6)
         
-         
-if __name__ == "__main__":    
+
+if __name__ == "__main__":
+    #import sys;sys.argv = ['', 'Test.test_init_db']
     unittest.main()
-    
-    
-    
-    

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 import unittest
 from fpdtest import FPDTest
 import agents as ag
@@ -52,6 +53,7 @@ class CasperTest(FPDTest):
                                     # the last link will test if we click the links from inner pages. We only expected to click link from homepage.
 
    
+   
 if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.testName']
+    #import sys;sys.argv = ['', 'Test.test_init_db']
     unittest.main()

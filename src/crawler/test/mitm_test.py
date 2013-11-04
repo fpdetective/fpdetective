@@ -1,6 +1,6 @@
-
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 import unittest
-import os
 from fpdtest import FPDTest
 from utils import run_cmd 
 import mitm
@@ -38,14 +38,13 @@ class Test(FPDTest):
         self.pids.append(pid)
         self.assertIsNone(port, "Port is not empty, %s" % msg)
         
-    def test_should_return_port_pid_and_create_out_file(self):
+    def test_should_return_port_pid(self):
         port, pid = mitm.run_mitmdump(mitmcfg.outfile, 2) # call with a port number
         self.assert_port_and_pid_is_ok(port, pid, "cannot start mitmdump with default port")
-        self.assert_is_file(mitmcfg.dmpfile, "Output file %s is missing" % mitmcfg.dmpfile)
         
-    def test_should_work_with_default_port(self):
-        port, pid = mitm.run_mitmdump(mitmcfg.outfile, 2) # call without a port number
-        self.assert_port_and_pid_is_ok(port, pid, "cannot start mitmdump with default port")
+    def test_should_create_out_file(self):
+        mitm.run_mitmdump(mitmcfg.outfile, 2) # call without a port number
+        sleep(1) # give some to mitmdump
         self.assert_is_file(mitmcfg.dmpfile, "Output file %s is missing, cannot start mitmdump with default port" % mitmcfg.dmpfile)
 
     def test_should_run_process_async(self):
@@ -55,7 +54,7 @@ class Test(FPDTest):
         self.assertLess(time_passed, mitm.PORT_TRY_TIMEOUT+TIME_TOLERANCE, "mitmdump didn't return immediately %s " % time_passed)
      
     def test_should_run_multiple_instances_together(self):
-        for i in xrange(50): # run 50 mitmdump instances together 
+        for i in xrange(5): # run 50 mitmdump instances together 
             i += 1
             sleep(0.2)
             try:
@@ -70,7 +69,7 @@ class Test(FPDTest):
             
 
     
-    
+   
 if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.testName']
+    #import sys;sys.argv = ['', 'Test.test_init_db']
     unittest.main()

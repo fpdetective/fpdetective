@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 import unittest
 import log_parser as lp
 import fileutils as fu
@@ -69,6 +70,7 @@ class ParserTest(FPDTest):
         self.assertTrue(lp.get_fp_from_reqs(fp_urls)) # should return something different if it finds fp urls
         self.assertFalse(lp.get_fp_from_reqs(['foo.org', 'foo.com', 'bar.org'])) #
 
+   
 if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.testName']
+    #import sys;sys.argv = ['', 'Test.test_init_db']
     unittest.main()

@@ -1,3 +1,4 @@
+
 import unittest
 import os, re
 import fileutils as fu
@@ -36,7 +37,7 @@ class FPDTest(unittest.TestCase):
 
     def assert_is_file(self, filename, msg):
         """Check if file exist."""
-        self.assert_(os.path.isfile(filename), msg)
+        self.assertTrue(os.path.isfile(filename), msg)
     
     def assert_pat_in_file(self, filename, pat):
         self.assertTrue(fu.grep_all_in_file(filename, pat), "Cannot find pattern %s in %s" % (pat, filename)) 

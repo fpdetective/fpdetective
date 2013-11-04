@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 import unittest
-import os
 import agents as ag
 import common as cm
 import fileutils as fu
@@ -117,5 +117,5 @@ class AgentTest(FPDTest):
         self.dirs_to_remove.append(os.path.realpath(cr_job.job_dir))
             
 if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.testName']
+    #import sys;sys.argv = ['', 'Test.test_init_db']
     unittest.main()

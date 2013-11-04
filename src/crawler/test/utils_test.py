@@ -1,4 +1,5 @@
-
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 import unittest
 import utils as ut
 #from random import randint
@@ -92,6 +93,7 @@ class UtilsTest(FPDTest):
         self.assertEqual(ut.is_unique([1,1]), False)
                  
         
+   
 if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.test_rand_str']
+    #import sys;sys.argv = ['', 'Test.test_init_db']
     unittest.main()

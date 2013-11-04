@@ -1,9 +1,9 @@
-
-import os
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 import unittest
 import utils as ut
-import log_parser as lp
 import common as cm
+import webutils as wu
 from fpdtest import FPDTest
 
 class RunningEnvTest(FPDTest):
@@ -25,14 +25,11 @@ class RunningEnvTest(FPDTest):
     def test_run_dirs(self):
         run_dirs = (cm.BASE_FP_RUN_FOLDER, cm.BASE_FP_JOBS_FOLDER, cm.BASE_FP_LOGS_FOLDER)
         for run_dir in run_dirs:
-            self.failUnless(os.path.isdir(run_dir))
+            self.failUnless(os.path.isdir(run_dir), 'Cannot find dir: %s' % run_dir)
     
-    def test_phantomjs_should_find_casperjs(self):
-        test_url = cm.BASE_TEST_URL + '/font-face/barebones.html'
-        self.should_crawl_and_log({'main_js': cm.CASPER_JS_LAZY_HOMEPAGER,
-                                  'post_visit_func': lp.parse_log_dump_results,
-                                  'timeout': 15}, (test_url,), (), 'Cannot find casperjs module, quitting...')
-    
+    def test_alexa_list(self):
+        os.path.isfile(wu.ALEXA_TOP1M_PATH)
+
 if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.testName']
+    #import sys;sys.argv = ['', 'Test.test_init_db']
     unittest.main()
