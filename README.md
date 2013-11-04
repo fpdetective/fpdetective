@@ -12,6 +12,7 @@ A framework for conducting large scale web privacy studies.
 ## Get Started
 * Check [documentation](https://github.com/fpdetective/fpdetective/wiki)
 * Visit [FPDetective website](https://www.cosic.esat.kuleuven.be/fpdetective/).
+* Instructions for [using FPDetective with a VM](https://github.com/fpdetective/fpdetective/wiki/Instructions-for-setting-up-VM)
 * Check out recent binary [releases](https://github.com/fpdetective/phantomjs/releases).
 * Consult [PhantomJS wiki](https://github.com/ariya/phantomjs/wiki) to learn more about PhantomJS
 
