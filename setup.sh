@@ -2,7 +2,7 @@
 
 # Update repositories
 sudo apt-get update
-sudo apt-get upgrade
+sudo apt-get -y upgrade
 
 # Install required packages
 sudo apt-get install --yes --force-yes python python2.7-dev python-pyasn1 libxml2-dev libxslt1-dev python-setuptools python-mysqldb screen libxss-dev
