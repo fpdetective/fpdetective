@@ -30,6 +30,7 @@ sudo apt-get -y install --yes --force-yes mysql-server phpmyadmin
 mysql -u root --password=fpdetective < db/create_fp_database.sql
 
 # Download alexa top 1m
+mkdir run
 cd run
 wget http://s3.amazonaws.com/alexa-static/top-1m.csv.zip
 unzip top-1m.csv.zip
@@ -37,16 +38,45 @@ sudo rm -f top-1m.csv.zip
 
 # Download browser binaries from git repo
 #phantom 64
-cd phantom
+mkdir bins
+cd bins
+mkdir phantomjs
+cd phantomjs
+
 wget https://github.com/fpdetective/phantomjs/releases/download/v1.9/phantomjsm64.tar.gz
 tar -xzf phantomjsm64.tar.gz
 sudo rm -f phantomjsm64.tar.gz
 
-#chromium64
-cd ../chromium
+# setup chromium64
+cd ..
+mkdir chromium64
+cd chromium64
 wget https://github.com/fpdetective/phantomjs/releases/download/v1.9/chromium64.tar.gz
 tar -xzf chromium64.tar.gz
 sudo rm -f chromium64.tar.gz
+
+
+# setup chromedriver
+cd ..
+mkdir chromedriver
+cd chromedriver
+wget http://chromedriver.storage.googleapis.com/2.5/chromedriver_linux64.zip
+unzip chromedriver_linux64.zip
+sudo rm -f chromedriver_linux64.zip
+
+cd ..
+mkdir ffdec
+cd ffdec
+wget http://www.free-decompiler.com/flash/download/ffdec_1.7.3u2.zip
+unzip ffdec_1.7.3u2.zip
+
+cd ..
+mkdir casperjs
+cd casperjs
+wget https://github.com/n1k0/casperjs/zipball/1.0.3
+unzip n1k0-casperjs-1.0.3-0-g76fc831.zip
+mv n1k0-casperjs-76fc831/ casperjs
+
 cd ../..
 
 echo "The setup script has finished."
