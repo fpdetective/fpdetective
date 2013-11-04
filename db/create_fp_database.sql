@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `js_info` (
   `num_offsetHeight_calls` int(11) NOT NULL,
   `site_crawl_log` text NOT NULL,
   `site_info_id` int(10) unsigned NOT NULL,
-  `js_calls` mediumtext NOT NULL,
+  `fpd_logs` mediumtext NOT NULL,
   `crawl_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `site_info_id` (`site_info_id`),
