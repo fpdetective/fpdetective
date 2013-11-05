@@ -33,7 +33,8 @@ ninja -C out/Release chrome
     ninja -C out/Release chrome
 ```
 
-Please note that if you want to move Chromium to another directory, you also need to copy all the `.pak` files, `locales` directory and .so files from `out/Release` folder.
+Please note that if you want to move Chromium to another directory, 
+you also need to copy all the `.pak` files, `locales` directory and `.so` files from `out/Release` folder.
 
 ### PhantomJS
 1. Checkout and build PhantomJS code by following the instructions at [http://phantomjs.org/build](http://phantomjs.org/build)
