@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+#"i686" or "x86_64"
+machine=`uname -m`
+if [ $machine = "x86_64" ] ; then 
+  bits="64"; 
+elif [ $machine = "i686" ] ; then 
+  bits="32"; 
+fi;
+
 # Update repositories
 sudo apt-get update
 sudo apt-get -y upgrade
@@ -37,30 +45,30 @@ unzip top-1m.csv.zip
 sudo rm -f top-1m.csv.zip
 
 # Download browser binaries from git repo
-#phantom 64
+#phantom
 mkdir bins
 cd bins
 mkdir phantomjs
 cd phantomjs
 
-wget https://github.com/fpdetective/phantomjs/releases/download/v1.9/phantomjsm64.tar.gz
-tar -xzf phantomjsm64.tar.gz
-sudo rm -f phantomjsm64.tar.gz
+wget "https://github.com/fpdetective/phantomjs/releases/download/v1.9/phantomjsm$bits.tar.gz"
+tar -xzf "phantomjsm$bits.tar.gz"
+sudo rm -f "phantomjsm$bits.tar.gz"
 
-# setup chromium64
+# chromium
 cd ..
-wget https://github.com/fpdetective/phantomjs/releases/download/v1.9/chromium64.tar.gz
-tar -xzf chromium64.tar.gz
-sudo rm -f chromium64.tar.gz
+wget "https://github.com/fpdetective/phantomjs/releases/download/v1.9/chromium$bits.tar.gz"
+tar -xzf "chromium$bits.tar.gz"
+sudo rm -f "chromium$bits.tar.gz"
 
 
 # setup chromedriver
 cd ..
 mkdir chromedriver
 cd chromedriver
-wget http://chromedriver.storage.googleapis.com/2.5/chromedriver_linux64.zip
-unzip chromedriver_linux64.zip
-sudo rm -f chromedriver_linux64.zip
+wget "http://chromedriver.storage.googleapis.com/2.5/chromedriver_linux$bits.zip"
+unzip "chromedriver_linux$bits.zip"
+sudo rm -f "chromedriver_linux$bits.zip"
 
 cd ..
 mkdir ffdec
