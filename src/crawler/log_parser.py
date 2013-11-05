@@ -4,7 +4,8 @@ import fileutils as fu
 import dbutils as dbu
 from log import wl_log
 from webutils import PublicSuffix
-import os, sys, re
+import os
+import re
 import operator
 import parallelize
 from functools import partial

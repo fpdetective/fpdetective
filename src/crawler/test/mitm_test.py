@@ -9,7 +9,6 @@ from time import time, sleep
 
 TIME_TOLERANCE = 1
 
-
 class mitmcfg:
     outfile = '/tmp/mitmout'
     dmpfile = outfile + '.dmp'   
@@ -19,7 +18,7 @@ class Test(FPDTest):
     def setUp(self):
         self.new_temp_file(mitmcfg.outfile) # this will be removed by base class
         self.new_temp_file(mitmcfg.dmpfile) # this will be removed by base class
-        self.pids = []
+        self.pids = [] # to be killed on tearDown
         
     def tearDown(self):        
         for pid in self.pids:
@@ -64,11 +63,9 @@ class Test(FPDTest):
     
     def test_get_free_port(self):
         port = mitm.get_free_port()
-        self.assert_(port > mitm.MIN_PORT_NO, "get_free_port return privileged port")
-        self.assert_(port < mitm.MAX_PORT_NO, "get_free_port return out of range port")
+        self.assert_(port > mitm.MIN_PORT_NO, "get_free_port returned privileged port")
+        self.assert_(port < mitm.MAX_PORT_NO, "get_free_port returned out of range port")
             
-
-    
    
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.test_init_db']

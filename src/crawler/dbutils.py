@@ -15,8 +15,8 @@ def mysql_init_db(db_name='fp_detective'):
     try:
         db_conn = mdb.connect(DB_IP_ADDRESS, DB_USERNAME, DB_PASSWD, db_name);
     except mdb.Error, e:  
-        print "Error %d: %s" % (e.args[0],e.args[1])
-
+        wl_log.critical("Error %d: %s" % (e.args[0],e.args[1]))
+        raise e
     return db_conn
 
 def insert_to_db(db_conn, query, args):

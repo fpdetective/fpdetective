@@ -144,10 +144,7 @@ class Test(FPDTest):
         self.assert_(len(rows), 'No SWF can be found in DB')
         for row in rows:
             self.assertTrue('http' in row['swf_url'], 'swf url is does not have http in it')
-
-        
-        
-   
+  
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.test_init_db']
     unittest.main()

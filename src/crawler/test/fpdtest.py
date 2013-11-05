@@ -14,16 +14,26 @@ class FPDTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.files_to_remove = [] # list of files to be removed during class teardown
+    
+    def should_not_raise(self, msg, fn, *xargs, **kwargs):
+        """Ensure that function does not raises an exception when executed with the given args."""
+        try:
+            fn(*xargs, **kwargs)            
+        except:
+            self.fail(msg)
+        else:
+            pass
+    
         
     def should_raise(self, msg, fn, *xargs, **kwargs):
-        """Check whether function raises an exception when executed with the given args."""
+        """Ensure that function raises an exception when executed with the given args."""
         try:
             fn(*xargs, **kwargs)            
         except:
             pass
         else:
             self.fail(msg)
-    
+                    
     
     def should_raise_for_diff_len_args(self, func, arg1, arg2):
         """Check whether function raises an exception when executed with args of disparate lengths."""

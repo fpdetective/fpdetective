@@ -4,6 +4,7 @@ import unittest
 import utils as ut
 import common as cm
 import webutils as wu
+import dbutils as dbu
 from fpdtest import FPDTest
 
 class RunningEnvTest(FPDTest):
@@ -29,6 +30,13 @@ class RunningEnvTest(FPDTest):
     
     def test_alexa_list(self):
         os.path.isfile(wu.ALEXA_TOP1M_PATH)
+    
+    def test_mysql(self):
+        self.should_not_raise('MySQL Error: cannot connect to default DB', dbu.mysql_init_db)
+        self.should_not_raise('MySQL Error: cannot connect to test DB (fp_detective_test)', dbu.mysql_init_db, 'fp_detective_test')
+    
+    def test_apache(self):
+        pass
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.test_init_db']

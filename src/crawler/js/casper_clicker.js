@@ -33,7 +33,16 @@ var casper = require('casper').create({
 var url_to_visit = casper.cli.get(0);
 var num_clicked_links = 0
 
-var caps_name = (casper.cli.get(2) !== 'NO_SCREENSHOT') ? caps_name : '';
+var caps_name = (casper.cli.get(1) !== 'NO_SCREENSHOT') ? casper.cli.get(1): '';
+var client_js= casper.cli.get(2);
+
+casper.echo('Clientjs: '+client_js);
+casper.echo('caps_name: '+caps_name);
+
+// http://docs.casperjs.org/en/latest/modules/casper.html#clientscripts
+if (client_js !== "NO_CLIENT_JS"){ 
+	casper.options.clientScripts = [client_js];
+}
 	
 // TODO: handle NO_SCREENSHOT
 if (!url_to_visit) {

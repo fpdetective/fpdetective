@@ -62,21 +62,6 @@ class Test(FPDTest):
             if not cr.is_external(external_pair[0], external_pair[1]):
                 self.fail("is_external returned False for an external link %s" % external_pair[0])
     
-    def test_SUID_sandbox(self):
-        log_file = self.new_temp_file('/tmp/chrome.log')
-        url = cm.BASE_TEST_URL + "font-face/font-face-names.html"
-        unexpected_strs = ('FATAL:browser_main_loop.cc', 'Running without the SUID sandbox')
-        expected_strs = ('FPLOG',)
-        
-        cmd='timeout 10 xvfb-run --auto-servernum %s --disable-setuid-sandbox --enable-logging=stderr --v=1 --vmodule=frame=1 \
-            --user-data-dir=/tmp/temp_profile%s --disk-cache-dir=/tmp/tmp_cache%s %s 2>&1 | tee %s' %\
-            (cm.CHROME_MOD_BINARY, ut.rand_str(), ut.rand_str(), url, log_file)
-        
-        ut.run_cmd(cmd)
-        
-        self.assert_all_patterns_not_in_file(log_file, unexpected_strs)
-        self.assert_all_patterns_in_file(log_file, expected_strs)
-
 
     def test_chrome_should_not_click(self):
         cm.BASE_TEST_URL_ONLINE + 'out_links.html'

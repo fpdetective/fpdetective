@@ -98,10 +98,7 @@ def cancel_timeout():
     signal.alarm(0)
 
 def run_cmd(cmd):
-    status, output = commands.getstatusoutput('%s ' %(cmd))
-    if status:
-        wl_log.critical('An error occurred while calling %s: (%s) %s' % (cmd, status, output))
-    return status, output
+    return commands.getstatusoutput('%s ' %(cmd))
     
 def is_installed(pkg_name):
     """Check if a package is installed."""
