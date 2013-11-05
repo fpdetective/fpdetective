@@ -1,5 +1,7 @@
 ### Instructions for patching browsers
-Please follow following instructions to build FPDetective browsers from source code.
+You can use patches in this directory to build modified browsers used in FPDetective. 
+The patched browsers will logs [events](https://github.com/fpdetective/fpdetective/blob/master/patches/README.md##the-patched-browsers-will-log-the-following-events) that might be related to web-based device fingerprinting.
+
 * [Chromium](https://github.com/fpdetective/fpdetective/blob/master/patches/README.md#chromium)
 * [PhantomJS](https://github.com/fpdetective/fpdetective/blob/master/patches/README.md#phantomjs)
 
