@@ -8,6 +8,6 @@ sudo apt-get upgrade
 sudo apt-get -y install --yes --force-yes git-core
 git clone git://github.com/fpdetective/fpdetective.git
 cd fpdetective
-sh setup.sh
+sudo ./setup.sh
 
 echo "The bootstrap script has finished."
