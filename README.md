@@ -9,7 +9,6 @@ A framework for conducting large scale web privacy studies.
 ```
 git clone https://github.com/fpdetective/fpdetective.git
 cd fpdetective
-git checkout 0.1
 ```
 After that point, you've two options: 
 1. Run `./setup.sh` to use FPDetective on your computer
