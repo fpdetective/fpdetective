@@ -2,6 +2,7 @@ import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 import unittest
 import webutils as wu 
+import common as cm
 from fpdtest import FPDTest
 
 class WebUtilsTest(FPDTest):
@@ -15,6 +16,10 @@ class WebUtilsTest(FPDTest):
     
     def test_read_url(self):
         page_html = wu.read_url('http://www.google.com')
+        self.assertIn('<html', page_html, "Cannot find html tag")        
+  
+    def test_read_file_url(self):
+        page_html = wu.read_url(cm.BASE_TEST_URL + 'crawler/barebones.html')
         self.assertIn('<html', page_html, "Cannot find html tag")        
 
     def test_strip_url_scheme(self):

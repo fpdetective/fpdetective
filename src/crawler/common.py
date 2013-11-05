@@ -22,9 +22,9 @@ BASE_FP_SRC_FOLDER = join(BASE_FP_DETECTIVE_FOLDER, 'src/crawler')
 BASE_PHANTOM_FOLDER = join(BASE_FP_BIN_FOLDER, 'phantomjs')
 
 PHANTOM_BINARY = join(BASE_PHANTOM_FOLDER, "phantomjs%s" % arch) # path to phantomjs binary (don't use down-rev platform package)
-PHANTOM_MOD_BINARY = join(BASE_PHANTOM_FOLDER, "phantomjs%smod" % arch) # path to homebrew phantomjs binary
+PHANTOM_MOD_BINARY = join(BASE_PHANTOM_FOLDER, "phantomjs%smod" % arch) # path to modified phantomjs binary
 CHROME_BINARY =  "chromium-browser" # use platform package
-CHROME_MOD_BINARY =  join(BASE_FP_BIN_FOLDER, "chromium%s/chrome" % arch) # path to 64 bit version of our homebrew chrome binary
+CHROME_MOD_BINARY =  join(BASE_FP_BIN_FOLDER, "chromium%s/chrome" % arch) # path to our modified chrome binary
 CHROME_DRIVER_BINARY = join(BASE_FP_BIN_FOLDER, 'chromedriver/chromedriver%s' % arch)
 CASPER_BINARY = join(BASE_FP_BIN_FOLDER, "casperjs/bin/casperjs") # path to casperjs binary
 

@@ -11,7 +11,6 @@ from time import sleep
 from log import wl_log
 from libmproxy import flow
 
-ENABLE_MITM_LOG = 0 # to enable /redirect stdout log 
 MITM_LOG_EXTENSION = 'mlog'
 MAX_FILENAME_LEN = 256
 
@@ -41,31 +40,31 @@ def get_free_port():
             return port
     return None
 
-def run_mitmdump(base_filename, timeout):
+def run_mitmdump(basename, timeout, logging=False):
     """Run mitmdump as a subprocess in the background with a timeout."""
     port = get_free_port()
-    if not port:
+    if not port: # we cannot get a free port
         return None, None
     
-    dump_file = "%s.dmp" % base_filename
+    dump_file = "%s.dmp" % basename
     cmd_re_dir = '' # for redirecting stderr to stdout and teeing
     quite_option = '-q' # mitmdump option to be quiet - no log
     
-    if ENABLE_MITM_LOG:
-        mitm_log_file = "%s.%s" % (base_filename, MITM_LOG_EXTENSION)
+    if logging:
+        mitm_log_file = "%s.%s" % (basename, MITM_LOG_EXTENSION)
         cmd_re_dir = ' 2>&1 |tee %s' % mitm_log_file # redirect all output to log file
-        quite_option = '' # we don't want be quite
+        quite_option = '' # we don't want be quite!
         
     cmd = 'timeout %s mitmdump %s -z --anticache -p %s -w %s %s' % (timeout, quite_option, port, dump_file, cmd_re_dir)
-    # -z: Try to convince servers to send us un-compressed data. mitmdump -h | grep "\-z"
+    # -z: Try to convince servers to send us uncompressed data. mitmdump -h | grep "\-z" for info
     
-    wl_log.info('mitmdump cmd %s' % (cmd))
+    wl_log.info('mitmdump cmd %s' % cmd)
     subp = subprocess.Popen(cmd, shell=True) # shell=True - must be careful
     return port, subp.pid
 
-def init_mitmproxy(basename, timeout):
+def init_mitmproxy(basename, timeout, logging):
     try:
-        port, pid = run_mitmdump(basename, timeout+1) # runs a mitmdump process with the timeout+1 sec
+        port, pid = run_mitmdump(basename, timeout+1, logging) # runs a mitmdump process with the timeout+1 sec
     except:
         wl_log.critical('Exception initializing mitmdump')
     else:

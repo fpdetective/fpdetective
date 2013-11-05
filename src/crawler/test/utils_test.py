@@ -2,7 +2,6 @@ import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 import unittest
 import utils as ut
-#from random import randint
 from fpdtest import FPDTest
 from time import sleep, time
 

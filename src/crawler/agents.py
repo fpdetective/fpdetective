@@ -1,7 +1,6 @@
 
 import sys
 import os
-import commands
 import parallelize
 import mitm
 import common as cm
@@ -22,7 +21,7 @@ KILL_PROC_AFTER_TIMEOUT = 5
 from log import wl_log
 
 PHANTOM_COMMON_OPTIONS = '--web-security=false --disk-cache=false --ignore-ssl-errors=true --cookies-file=/dev/null --local-storage-path=/dev/null'
-CHROME_COMMON_OPTIONS = '--allow-running-insecure-content --disable-background-networking --ignore-certificate-errors --disk-cache-size=0 --enable-logging=stderr --v=1'
+CHROME_COMMON_OPTIONS = '--allow-running-insecure-content --disable-background-networking --ignore-certificate-errors  --no-sandbox --disk-cache-size=0 --enable-logging=stderr --v=1'
 
 # TODO pass parameters to same JS file instead of having many JS files... 
 
@@ -56,8 +55,7 @@ AGENT_CFG_DNT_PHANTOM_LAZY = {
                          'post_visit_func': lp.parse_log_dump_results,
                          'binary_path': cm.PHANTOM_MOD_BINARY,
                          'cmd_line_options': PHANTOM_COMMON_OPTIONS,
-                         'fc_fontdebug': 0,
-                         'main_js': cm.CASPER_JS_DNT_LAZY,
+                         'main_js': cm.CASPER_JS_DNT_LAZY, # sends DNT=1 header
                          'timeout': 90
                         }
 
@@ -66,21 +64,15 @@ AGENT_CFG_PHANTOM_MOD_CLICKER = {
                          'post_visit_func': lp.parse_log_dump_results,
                          'binary_path': cm.PHANTOM_MOD_BINARY,
                          'cmd_line_options': PHANTOM_COMMON_OPTIONS,
-                         'fc_fontdebug': 0,
                          'main_js': cm.CASPER_JS_CLICKER,
                          'timeout': 210
-                        }   
-
+                        }
 
 AGENT_CFG_CHROME_LAZY = {
                     'type': 'chrome_lazy',
-                    'main_js': '',
-                    'casper_client_js': '',
                     'binary_path': cm.CHROME_MOD_BINARY,
-                    'fc_fontdebug': 0,
-                    'cmd_re_dir' : True,
                     'use_mitm_proxy': True,
-                    'post_visit_func': mitm.process_dump,
+                    'post_visit_func': mitm.process_dump, # register function to post-process data
                     'cmd_line_options': CHROME_COMMON_OPTIONS,
                     'timeout': 50
                     }
@@ -88,7 +80,6 @@ AGENT_CFG_CHROME_LAZY = {
 AGENT_CFG_CHROME_CLICKER = {
                     'type': 'chrome_clicker',
                     'binary_path': 'python %s' % cm.CRAWLER_PY_PATH,
-                    'fc_fontdebug': 0,
                     'use_mitm_proxy': True,
                     'post_visit_func': mitm.process_dump,
                     'timeout': 240
@@ -134,9 +125,10 @@ class CrawlAgent(object):
         self.binary_path = cm.PHANTOM_MOD_BINARY
         self.cmd_line_options = PHANTOM_COMMON_OPTIONS
         self.use_mitm_proxy = False # mitm
+        self.mitm_proxy_logs = False # disable mitmproxy logging
         self.crawl_job = None # to be set by crawljob
         self.job_dir = ''
-        self.fc_fontdebug = 0 # set FC_DEGUB env variable to 1 before running the agent. Maybe used to debug with fontconfig
+        self.fc_fontdebug = 0 # set FC_DEGUB env variable to 0 before running the agent.
         self.crawl_id = 0
         
     def setOptions(self, cfg):
@@ -144,17 +136,17 @@ class CrawlAgent(object):
         for key in cfg.keys():
             setattr(self, key, cfg[key]) # values are not checked or sanitized! Should we? !!!
             # print 'setoptions', key, '=>', cfg[key]  
-
+        return self
+    
 class HeadlessAgent(CrawlAgent):
     """Class for headless crawler agents such as CasperJS and PhantomJS."""
     def __init__(self):
-        self.type = 'lazy'
-        self.main_js = cm.CASPER_JS_LAZY_HOMEPAGER
-        self.cmd_re_dir = True
-        self.timeout = 90
-        self.screenshot = '' # TODO handle default value in casper/phantom script
+        self.type = 'lazy' # lazy will only visit homepages, clicker will click links on the page 
+        self.main_js = cm.CASPER_JS_LAZY_HOMEPAGER # JS that PhantomJS will execute - first parameter
+        self.timeout = 90 # time to wait before killing the browser process
+        self.screenshot = True # take a screenshot or not
         self.casper_client_js = 'NO_CLIENT_JS' # casper should not load any client scripts
-        self.post_visit_func = lp.parse_log_dump_results
+        self.post_visit_func = lp.parse_log_dump_results # worker function that will run after visit 
         super(HeadlessAgent, self).__init__()
 
 class ChromeAgent(CrawlAgent):
@@ -163,77 +155,72 @@ class ChromeAgent(CrawlAgent):
         
         self.binary_path = 'python %s' % cm.CRAWLER_PY_PATH
         self.type = 'chrome_lazy'
-        self.cmd_re_dir = True
         self.timeout = 90
-        self.screenshot = ''
+        self.screenshot = '' #
+        self.main_js = '' # irrelevant for chrome
+        self.casper_client_js = ''
         self.post_visit_func = mitm.process_dump
         self.use_mitm_proxy = True # use mitmdump to save flash files
-        self.cmd_line_options = '--proxy_port'
+        self.mitm_proxy_logs = False # disable logging from mitmproxy
+        self.cmd_line_options = ''
         super(ChromeAgent, self).__init__()
 
+
+def get_visit_cmd(agent_cfg, proxy_opt, stdout_log, url):
+    """Return command for a visit."""
+    xvfb = ''
+    caps_name = ''
+    clientjs = ''
+    
+    if 'chrome' in agent_cfg['type']:
+        proxy_opt = '--proxy-server=%s' % proxy_opt
+        redir_str =  '2>&1 | tee %s' % stdout_log # chrome logs to stderr, we redirect it to stdout
+        cmd_line_options = agent_cfg['cmd_line_options'] + \
+            ' --disk-cache-dir=/tmp/tmp_cache%s --user-data-dir=/tmp/temp_profile%s' % (ut.rand_str(), ut.rand_str())
+        xvfb = 'xvfb-run --auto-servernum' # use xvfb for chrome
+    else:
+        proxy_opt = '--proxy=%s' % proxy_opt
+        redir_str = ' > %s' % stdout_log # redirect all output to log file
+        cmd_line_options = agent_cfg['cmd_line_options']
+        caps_name =  stdout_log[:-4] + '.png' if agent_cfg['screenshot'] else 'NO_SCREENSHOT' 
+        clientjs = agent_cfg['casper_client_js']
+    cmd = 'export FC_DEBUG=%s; %s timeout -k %s %s %s %s %s %s %s %s %s %s' \
+        % (agent_cfg['fc_fontdebug'], xvfb, KILL_PROC_AFTER_TIMEOUT, agent_cfg['timeout'], agent_cfg['binary_path'], 
+           cmd_line_options, proxy_opt, agent_cfg['main_js'], url, 
+           caps_name, clientjs, redir_str)
+    
+    return cmd
+
 def crawl_worker(agent_cfg, url_tuple):
-    """Crawl given url with the headless browser. Will work in parallel. Cannot be class method."""
-    MAX_SLEEP_BEFORE_JOB = 10
-    sleep(random() * MAX_SLEEP_BEFORE_JOB)
+    """Crawl given url. Will work in parallel. Cannot be class method."""
+    MAX_SLEEP_BEFORE_JOB = 10 # prevent starting all parallel processes at the same instance
+    sleep(random() * MAX_SLEEP_BEFORE_JOB) # sleep for a while
     
     try:
         idx, url = url_tuple
         idx = str(idx)
         
         stdout_log =  os.path.join(agent_cfg['job_dir'], fu.get_out_filename_from_url(url, str(idx), '.txt'))
-        caps_name =  os.path.join(agent_cfg['job_dir'], fu.get_out_filename_from_url(url, str(idx), '.' + agent_cfg['screenshot'])) if agent_cfg['screenshot'] else '' 
-        # chrome_log = stdout_log[:-4] + '.chr'
-        
+       
         if not url[:5] in ('data:', 'http:', 'https', 'file:'):
             url = 'http://' + url
         
-        proxy_opt = mitm.init_mitmproxy(stdout_log[:-4], agent_cfg['timeout']) if agent_cfg['use_mitm_proxy'] else ""
+        proxy_opt = mitm.init_mitmproxy(stdout_log[:-4], agent_cfg['timeout'], agent_cfg['mitm_proxy_logs']) if agent_cfg['use_mitm_proxy'] else ""
         
-        # crawl_agent_cfg['screenshot # should_render = "" !!!
         if not 'chrome_clicker' in agent_cfg['type']:
-            if 'chrome' in agent_cfg['type']: 
-                proxy_opt = '--proxy-server=%s' % proxy_opt
-                cmd_re_dir_str =  '2>&1 | tee %s' % stdout_log
-                cmd_line_options = agent_cfg['cmd_line_options'] + ' --disk-cache-dir=/tmp/tmp_cache%s --user-data-dir=/tmp/temp_profile%s' % (ut.rand_str(), ut.rand_str())
-                xvfb = 'xvfb-run --auto-servernum' # use xvfb for chrome
-            else:  
-                proxy_opt = '--proxy=%s' % proxy_opt
-                cmd_re_dir_str = ' > %s' % stdout_log if agent_cfg['cmd_re_dir'] else "" # redirect all output to log file
-                cmd_line_options = agent_cfg['cmd_line_options']
-                xvfb = ''
-                
-            cmd = 'export FC_DEBUG=%s; %s timeout -k %s %s %s %s %s %s %s %s %s %s' \
-                % (agent_cfg['fc_fontdebug'], xvfb, KILL_PROC_AFTER_TIMEOUT, agent_cfg['timeout'], agent_cfg['binary_path'], 
-                   cmd_line_options, proxy_opt, agent_cfg['main_js'], url, 
-                   agent_cfg['casper_client_js'], caps_name, cmd_re_dir_str)
-
+            cmd = get_visit_cmd(agent_cfg, proxy_opt, stdout_log, url)
             wl_log.info('>> %s (%s) %s' % (url, idx, cmd))
-            status, output = commands.getstatusoutput(cmd) # Run the command
+            status, output = ut.run_cmd(cmd) # Run the command
             if status and status != ERR_CMD_TIMEDOUT:
                 wl_log.critical('Error while visiting %s(%s) w/ command: %s: (%s) %s' % (url, idx, cmd, status, output))
             else:
                 wl_log.info(' >> ok %s (%s)' % (url, idx))
             
         else:
-#             cmd_line_options = "--url %s --crawler_type %s --proxy %s" % (url, agent_cfg['type'], proxy_opt)
-#             cmd_re_dir_str = ''
-#             cmd = 'export CHROME_LOG_FILE=%s; timeout %s %s %s %s' \
-#                 % (chrome_log, agent_cfg['timeout'], agent_cfg['binary_path'], 
-#                    cmd_line_options, cmd_re_dir_str)                   
-        
-#             br = cr.init_browser('chrome', ['--allow-running-insecure-content', '--ignore-certificate-errors', '--disk-cache-size=0', \
-#                                         '--enable-logging', '--v=1', "--proxy-server=%s" % proxy_opt])
-    
-#             if 'clicker' in agent_cfg['type']:
-#                 worker = cr.click_crawler
-#             else:
-#                 worker = cr.lazy_crawler
-            
             cr.crawl_url(agent_cfg['type'], url, proxy_opt)
             
-        
         sleep(2) # this will make sure mitmdump is timed out before we start to process the network dump
-        if agent_cfg['post_visit_func']: 
+        if agent_cfg['post_visit_func']: # this pluggable function will parse the logs and do whatever we want
             agent_cfg['post_visit_func'](stdout_log, crawl_id=agent_cfg['crawl_id'])
             
     except Exception as exc:
@@ -251,7 +238,7 @@ def run_crawl(cr_job):
     # only copy the variables that'll be used by the agent. Parallelization requires picklable variables. 
     cfg_dict = dict([(i, cr_agent.__dict__[i]) for i in \
                      ['fc_fontdebug', 'post_visit_func', 'timeout', 'binary_path', \
-                      'cmd_re_dir', 'use_mitm_proxy', 'cmd_line_options', 'main_js', \
+                      'use_mitm_proxy', 'mitm_proxy_logs', 'cmd_line_options', 'main_js', \
                       'casper_client_js', 'screenshot', 'job_dir', 'index_html_log', 'type', 'crawl_id'] if i in cr_agent.__dict__])
     
     
@@ -288,7 +275,7 @@ def create_job_folder():
     fu.add_symlink(os.path.join(cm.BASE_FP_JOBS_FOLDER, 'latest'), output_dir)
     return output_dir
     
-def crawl_sites(url_tuples, crawler_type, num_crawl_urls=0, max_parallel_procs=MAX_PARALLEL_PROCESSES, fc_debug=0):
+def crawl_sites(url_tuples, crawler_type, num_crawl_urls=0, max_parallel_procs=MAX_PARALLEL_PROCESSES):
     if crawler_type == 'lazy':                    
         agent_cfg = AGENT_CFG_PHANTOM_MOD_HOME_PAGE
         agent = HeadlessAgent()
@@ -305,8 +292,6 @@ def crawl_sites(url_tuples, crawler_type, num_crawl_urls=0, max_parallel_procs=M
         agent_cfg = AGENT_CFG_DNT_PHANTOM_LAZY
         agent = HeadlessAgent()    
         
-    agent_cfg['fc_fontdebug'] = fc_debug
-            
     agent.setOptions(agent_cfg)
     cr_job = CrawlJob(agent)
     
@@ -349,12 +334,11 @@ if __name__ == '__main__':
     start = 1 # start from the first ranked item in the (Alexa) file 
     stop = 0 # start from the first ranked item in the (Alexa) file
     max_parallel_procs = MAX_PARALLEL_PROCESSES
-    fc_debug = 0
     url_file = ''
     args = sys.argv[1:]
     
     if not args:
-        print 'usage: --url_file url_file --stop stop_pos [--start start_pos] --type [lazy | clicker | chrome_lazy | chrome_clicker | dnt | screenshot] --max_proc max_parallel_processes --fc_debug'
+        print 'usage: --url_file url_file --stop stop_pos [--start start_pos] --type [lazy | clicker | chrome_lazy | chrome_clicker | dnt | screenshot] --max_proc max_parallel_processes'
         sys.exit(1)
     
     if args and args[0] == '--url_file':
@@ -377,10 +361,6 @@ if __name__ == '__main__':
         max_parallel_procs = int(args[1])        
         del args[0:2]
     
-    if args and args[0] == '--fc_debug':
-        fc_debug = 1        
-        del args[0]
-    
     if args:
         print 'some arguments are not processed, check your command: %s' % (args)
         sys.exit(1)
@@ -390,4 +370,4 @@ if __name__ == '__main__':
         sys.exit(1)
         
     url_tuples = gen_url_list(stop, start, True, url_file)
-    crawl_sites(url_tuples, crawler_type, 1+stop-start, max_parallel_procs, fc_debug)
+    crawl_sites(url_tuples, crawler_type, 1+stop-start, max_parallel_procs)

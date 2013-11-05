@@ -1,6 +1,4 @@
-var MAX_DURATION_PER_LINK = 10000; // will click link and wait at most for 10 seconds
-var TIMEOUT_TOLERANCE = 2000;
-var WAIT_AFTER_LOAD = 10000;
+var WAIT_AFTER_PAGE_LOAD = 10000;
 
 var fs = require("fs");
 phantom.casperPath = fs.workingDirectory + "/../../../run/bins/casperjs"; // from test dir
@@ -18,13 +16,14 @@ var casper = require('casper').create({
 });
 
 var url = casper.cli.get(0);
-//var timeout = ~~casper.cli.get(1);
-var client_js= casper.cli.get(1);
-var caps_name = (casper.cli.get(2) !== 'NO_SCREENSHOT') ? casper.cli.get(2) : '';
-	
-if (client_js !== "NO_CLIENT_JS"){
-	casper.options.clientScripts = [client_js]
-	casper.echo('Clientjs: '+client_js);	
+var caps_name = (casper.cli.get(1) !== 'NO_SCREENSHOT') ? casper.cli.get(1) : '';
+var client_js= casper.cli.get(2);
+casper.echo('Clientjs: '+client_js);
+casper.echo('caps_name: '+caps_name);
+
+// http://docs.casperjs.org/en/latest/modules/casper.html#clientscripts
+if (client_js !== "NO_CLIENT_JS"){ 
+	casper.options.clientScripts = [client_js];
 }
 
 //casper.options.stepTimeout = timeout > 0 ? timeout : MAX_DURATION_PER_LINK;
@@ -65,16 +64,13 @@ casper.start();
 casper.userAgent('Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1673.0 Safari/537.36');
 casper.thenOpen(url, function() {
 	
-//	casper.userAgent('Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.22 (KHTML, like Gecko) Ubuntu Chromium/25.0.1364.160 Chrome/25.0.1364.160 Safari/537.22');
 	casper.viewport(1280, 768);
 	casper.log("Loaded " + url, 'info');
-	this.wait(WAIT_AFTER_LOAD, function(){
+	this.wait(WAIT_AFTER_PAGE_LOAD, function(){
 		if(caps_name){
-			this.capture(caps_name)
+			this.capture(caps_name);
+			casper.log("ScreenshoT!", 'info');
 		}
-		//links_to_click = casper.getLinksToclick();
-		//casper.visit_links(links_to_click);
-		// casper.click_labels();
 		casper.log("Finished all steps!", 'info');
 		casper.exit();
 	});

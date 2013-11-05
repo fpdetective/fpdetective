@@ -15,7 +15,6 @@ LINK_LABELS = ('Sign In', 'Sign Up', 'Sign On', 'Register', 'Login', 'Log-in', '
 LINK_URLS = ('login', 'logon', 'sign', 'register', 'subscri', 'log-in', 'log-on', 'join', 'sell', 'member',
                    'auth', 'account', 'user', 'password', 'store', 'shop', 'my') # TODO add other patterns
 
-
 SLEEP_AFTER_PAGE_LOAD = 5
 NO_OF_LINKS_TO_CLICK = 50
 MAX_LINKS_TO_CLICK = 25

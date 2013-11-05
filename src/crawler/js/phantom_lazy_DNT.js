@@ -1,4 +1,3 @@
-// https://code.google.com/p/phantomjs/issues/attachmentText?id=351&aid=3510000000&name=iphone4S.js&token=CF9yuekhCQeCEaB8a9-YLGQdA_g%3A1367969992618
 var WAIT_AFTER_LOAD = 10000;
 
 var page = new WebPage(),
@@ -16,7 +15,7 @@ page.customHeaders = {
 	'DNT': '1'
 };
 
-if (phantom.args.length < 1 || phantom.args.length > 2) {
+if (phantom.args.length < 1) {
     console.log('You need to pass a URL and nothing else.');
     phantom.exit();
 } else {
