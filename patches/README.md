@@ -39,9 +39,10 @@ you also need to copy all the `.pak` files, `locales` directory and `.so` files 
 ### PhantomJS
 1. Checkout and build PhantomJS code by following the instructions at [http://phantomjs.org/build](http://phantomjs.org/build)
 2. Make sure you're able to build and run the binary
-3. Apply the patch with the command:
+3. Download the [patch file](https://raw.github.com/fpdetective/fpdetective/master/patches/phantomjs.patch)
+4. Apply the patch with the command:
 `patch -p0 < phantomjs.patch`
-4. Run `./build.sh` again to build the patched binary
+5. Run `./build.sh` again to build the patched binary
 
 
 ### The patched browsers will log the following events:
