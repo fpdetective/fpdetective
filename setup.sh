@@ -48,9 +48,9 @@ sudo rm -f top-1m.csv.zip
 #phantom
 mkdir bins
 cd bins
+
 mkdir phantomjs
 cd phantomjs
-
 wget "https://github.com/fpdetective/phantomjs/releases/download/v1.9/phantomjsm$bits.tar.gz"
 tar -xzf "phantomjsm$bits.tar.gz"
 sudo rm -f "phantomjsm$bits.tar.gz"
@@ -61,14 +61,17 @@ wget "https://github.com/fpdetective/phantomjs/releases/download/v1.9/chromium$b
 tar -xzf "chromium$bits.tar.gz"
 sudo rm -f "chromium$bits.tar.gz"
 
-
 # setup chromedriver
-cd ..
 mkdir chromedriver
 cd chromedriver
 wget "http://chromedriver.storage.googleapis.com/2.5/chromedriver_linux$bits.zip"
 unzip "chromedriver_linux$bits.zip"
 sudo rm -f "chromedriver_linux$bits.zip"
+
+wget https://github.com/n1k0/casperjs/zipball/1.0.3
+unzip 1.0.3
+mv n1k0-casperjs-76fc831/ casperjs
+rm 1.0.3
 
 cd ..
 mkdir ffdec
@@ -76,12 +79,6 @@ cd ffdec
 wget http://www.free-decompiler.com/flash/download/ffdec_1.7.3u2.zip
 unzip ffdec_1.7.3u2.zip
 sudo rm -f ffdec_1.7.3u2.zip
-
-cd ..
-wget https://github.com/n1k0/casperjs/zipball/1.0.3
-unzip 1.0.3
-mv n1k0-casperjs-76fc831/ casperjs
-rm 1.0.3
 
 cd ../..
 
