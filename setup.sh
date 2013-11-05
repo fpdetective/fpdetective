@@ -8,6 +8,8 @@ elif [ $machine = "i686" ] ; then
   bits="32"; 
 fi;
 
+su vagrant
+
 # Update repositories
 sudo apt-get update
 sudo apt-get -y upgrade
