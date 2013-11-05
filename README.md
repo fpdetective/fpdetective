@@ -5,12 +5,15 @@ STILL UNDER CONSTRUCTION!
 A framework for conducting large scale web privacy studies.
 
 ## Installation
-````
+
+```
 git clone https://github.com/fpdetective/fpdetective.git
 cd fpdetective
 git checkout 0.1
 ./setup.sh
 ```
+Please note that setup.sh will download browsers and other binaries used by FPDetective. 
+This may take while depending on your connection.
 
 ## Get Started
 * Check [documentation](https://github.com/fpdetective/fpdetective/wiki)
