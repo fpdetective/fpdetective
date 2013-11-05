@@ -1,4 +1,9 @@
-## Instructions for patching Chromium
+### Instructions for patching browsers
+Please follow following instructions to build FPDetective browsers from source code.
+* [Chromium](https://github.com/fpdetective/fpdetective/blob/master/patches/README.md#chromium)
+* [PhantomJS](https://github.com/fpdetective/fpdetective/blob/master/patches/README.md#phantomjs)
+
+### Chromium
 1. Checkout and build Chromium by following the instructions at [http://code.google.com/p/chromium/wiki/LinuxBuildInstructions](http://code.google.com/p/chromium/wiki/LinuxBuildInstructions) (for Linux)
 2. Make sure you're able to build and run the release version before applying the patch (the following commands worked for us)
 ```
@@ -11,7 +16,7 @@ ninja -C out/Release chrome
 ```
     git apply --check chromium.patch
 ```
-6. If the check in step 6 fails, revert to version we used to generate the patch (32.0.1673.0):
+6. If the check in step 6 fails, revert to exact snapshot used to generate the patch (32.0.1673.0):
 ```
     gclient config https://src.chromium.org/chrome/releases/32.0.1673.0
 ```
@@ -28,9 +33,9 @@ ninja -C out/Release chrome
 
 Please note that if you want to move Chromium to another directory, you also need to copy all the `.pak` files, `locales` directory and .so files from `out/Release` folder.
 
-## Instructions for patching PhantomJS
+### PhantomJS
 1. Checkout and build PhantomJS code by following the instructions at [http://phantomjs.org/build](http://phantomjs.org/build)
-2. Make sure you're able to build the binary when you run `./build.sh`
+2. Make sure you're able to build and run the binary
 3. Apply the patch with the command:
 `patch -p0 < phantomjs.patch`
 4. Run `./build.sh` again to build the patched binary
