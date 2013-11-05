@@ -8,7 +8,7 @@ A framework for conducting large scale web privacy studies.
 ````
 git clone https://github.com/fpdetective/fpdetective.git
 cd fpdetective
-git checkout 1.9
+git checkout 0.1
 ./setup.sh
 ```
 
