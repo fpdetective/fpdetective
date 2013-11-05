@@ -28,7 +28,7 @@ You can follow these instructions to set up a VM and use FPDetective independent
 * [Instructions for setting up VM](https://github.com/fpdetective/fpdetective/wiki/Instructions-for-setting-up-VM)
 
 ### Patches for Chromium & PhantomJS browser
-You can use following patches to build FPDetective browsers from source. Consult instructions for further explanation.
+You can use following patches to build FPDetective browsers from source. Please consult the [instructions](https://github.com/fpdetective/fpdetective/blob/master/patches/README.md) for further explanation.
  
-* Chromium: [patch](https://github.com/fpdetective/fpdetective/blob/master/patches/chromium.patch) | [instructions](https://github.com/fpdetective/fpdetective/wiki/Instructions-for-Patching-Chromium)
-* PhantomJS: [patch](https://github.com/fpdetective/fpdetective/blob/master/patches/phantomjs.patch) | [instructions](https://github.com/fpdetective/fpdetective/wiki/Instructions-for-Patching-PhantomJS)
+* Chromium: [patch](https://github.com/fpdetective/fpdetective/blob/master/patches/chromium.patch)
+* PhantomJS: [patch](https://github.com/fpdetective/fpdetective/blob/master/patches/phantomjs.patch)
