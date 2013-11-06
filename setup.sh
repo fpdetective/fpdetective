@@ -13,7 +13,7 @@ sudo apt-get update
 sudo apt-get -y upgrade
 
 # Install required packages
-sudo apt-get install --yes --force-yes python python2.7-dev python-pyasn1 libxml2-dev libxslt1-dev python-setuptools python-mysqldb screen libxss-dev
+sudo apt-get install --yes --force-yes python python2.7-dev python-pyasn1 libxml2-dev libxslt1-dev python-setuptools python-mysqldb screen libxss-dev xvfb chromium-browser
 sudo easy_install pip
 sudo pip install mitmproxy
 sudo pip install pyOpenssl
@@ -45,15 +45,27 @@ unzip top-1m.csv.zip
 sudo rm -f top-1m.csv.zip
 
 # Download browser binaries from git repo
-#phantom
+
+mkdir jobs
+mkdir logs
 mkdir bins
 cd bins
 
+#phantom modified
 mkdir phantomjs
 cd phantomjs
 wget "https://github.com/fpdetective/phantomjs/releases/download/v1.9/phantomjsm$bits.tar.gz"
 tar -xzf "phantomjsm$bits.tar.gz"
+mv "phantomjs" "phantomjs"$bits"mod"
 sudo rm -f "phantomjsm$bits.tar.gz"
+
+#phantom
+wget "https://phantomjs.googlecode.com/files/phantomjs-1.9.2-linux-$machine.tar.bz2"
+tar -xvjf "phantomjs-1.9.2-linux-$machine.tar.bz2"
+mv "phantomjs-1.9.2-linux-$machine/bin/phantomjs" "phantomjs$bits"
+sudo rm -f "phantomjs-1.9.2-linux-$machine.tar.bz2"
+sudo rm -rf "phantomjs-1.9.2-linux-$machine"
+
 
 # chromium
 cd ..
@@ -68,12 +80,12 @@ wget "http://chromedriver.storage.googleapis.com/2.5/chromedriver_linux$bits.zip
 unzip "chromedriver_linux$bits.zip"
 sudo rm -f "chromedriver_linux$bits.zip"
 
+cd ..
 wget https://github.com/n1k0/casperjs/zipball/1.0.3
 unzip 1.0.3
 mv n1k0-casperjs-76fc831/ casperjs
 rm 1.0.3
 
-cd ..
 mkdir ffdec
 cd ffdec
 wget http://www.free-decompiler.com/flash/download/ffdec_1.7.3u2.zip
