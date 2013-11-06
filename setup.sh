@@ -51,13 +51,21 @@ mkdir logs
 mkdir bins
 cd bins
 
-#phantom
+#phantom modified
 mkdir phantomjs
 cd phantomjs
 wget "https://github.com/fpdetective/phantomjs/releases/download/v1.9/phantomjsm$bits.tar.gz"
 tar -xzf "phantomjsm$bits.tar.gz"
-mv "phantomjs/phantomjs" "phantomjs/phantomjs$bits"
+mv "phantomjs" "phantomjs"$bits"mod"
 sudo rm -f "phantomjsm$bits.tar.gz"
+
+#phantom
+wget "https://phantomjs.googlecode.com/files/phantomjs-1.9.2-linux-$machine.tar.bz2"
+tar -xvjf "phantomjs-1.9.2-linux-$machine.tar.bz2"
+mv "phantomjs-1.9.2-linux-$machine/bin/phantomjs" "phantomjs$bits"
+sudo rm -f "phantomjs-1.9.2-linux-$machine.tar.bz2"
+sudo rm -rf "phantomjs-1.9.2-linux-$machine"
+
 
 # chromium
 cd ..
