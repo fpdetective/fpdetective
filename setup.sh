@@ -71,6 +71,7 @@ wget "http://chromedriver.storage.googleapis.com/2.5/chromedriver_linux$bits.zip
 unzip "chromedriver_linux$bits.zip"
 sudo rm -f "chromedriver_linux$bits.zip"
 
+cd ..
 wget https://github.com/n1k0/casperjs/zipball/1.0.3
 unzip 1.0.3
 mv n1k0-casperjs-76fc831/ casperjs
