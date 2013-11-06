@@ -86,7 +86,6 @@ unzip 1.0.3
 mv n1k0-casperjs-76fc831/ casperjs
 rm 1.0.3
 
-cd ..
 mkdir ffdec
 cd ffdec
 wget http://www.free-decompiler.com/flash/download/ffdec_1.7.3u2.zip
