@@ -23,6 +23,13 @@ sudo pip install selenium
 # Create symbolic link
 ln -s `pwd` ~/fpbase
 
+# add alias
+echo alias follow_fp_log='tail -f ~/fpbase/run/logs/latest' >> ~/.bashrc
+echo alias go_latest_job='cd ~/fpbase/run/jobs/latest' >> ~/.bashrc
+echo alias go_fp_src='cd ~/fpbase/src/crawler' >> ~/.bashrc
+echo alias close_html='go_fp_src;python log_parser.py --close_index ~/fpbase/run/jobs/latest/' >> ~/.bashrc
+source ~/.bashrc
+
 # Install mysql server and phpmyadmin preventing password propmt by setting password beforehand ('fpdetective')
 echo 'mysql-server-5.5 mysql-server/root_password password fpdetective' | sudo debconf-set-selections
 echo 'mysql-server-5.5 mysql-server/root_password_again password fpdetective' | sudo debconf-set-selections
