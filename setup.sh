@@ -45,10 +45,13 @@ unzip top-1m.csv.zip
 sudo rm -f top-1m.csv.zip
 
 # Download browser binaries from git repo
-#phantom
+
+mkdir jobs
+mkdir logs
 mkdir bins
 cd bins
 
+#phantom
 mkdir phantomjs
 cd phantomjs
 wget "https://github.com/fpdetective/phantomjs/releases/download/v1.9/phantomjsm$bits.tar.gz"
