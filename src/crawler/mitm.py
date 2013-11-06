@@ -90,7 +90,7 @@ def parse_mitm_dump(basename, worker, crawl_id):
                 requests.append(msg.request.get_url())
                 # responses.append(msg.response.get_url())
                 worker(msg, crawl_id) # this worker func should take care of db insertion, logging etc.
-        except flow.FlowReadError as exc:
+        except flow.FlowReadError as _:
             pass
             #wl_log.critical("Error reading mitm dump %s" % exc)
     else:

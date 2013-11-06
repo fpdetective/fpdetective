@@ -18,7 +18,7 @@ FP_ACTIONSCRIPT_STR_LIST = ['enumerateFonts\(true', 'getFontList', '[cC]apabilit
               'createUID', 'getUrl', 'javascript', 'crypt', 'allowDomain', 'allowInsecureDomain', 'loadPolicyFile', 'URLRequest', 'LoadVars']
 
 BASE_FP_DETECTIVE_FOLDER = os.path.expanduser('~/fpbase')
-FFDEC_PATH = os.path.join(BASE_FP_DETECTIVE_FOLDER, 'run', 'ffdec', 'ffdec.jar')
+FFDEC_PATH = os.path.join(BASE_FP_DETECTIVE_FOLDER, 'run', 'bins', 'ffdec', 'ffdec.jar')
 
 class SwfInfo():
     def __init__(self):
