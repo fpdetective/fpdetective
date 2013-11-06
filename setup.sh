@@ -78,6 +78,7 @@ mkdir chromedriver
 cd chromedriver
 wget "http://chromedriver.storage.googleapis.com/2.5/chromedriver_linux$bits.zip"
 unzip "chromedriver_linux$bits.zip"
+mv chromedriver "chromedriver$bits"
 sudo rm -f "chromedriver_linux$bits.zip"
 
 cd ..
