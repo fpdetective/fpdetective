@@ -12,6 +12,8 @@ from itertools import imap
 from itertools import chain
 from log import wl_log
 from common import TimeExceededError
+from numpy import dot
+from numpy.linalg import norm
 
 ASCII_LOWERCASE_CHARS = 'abcdefghijklmnopqrstuvwxyz'
 DIGITS = '0123456789'
@@ -34,10 +36,10 @@ def rand_str(size=DEFAULT_RAND_STR_SIZE, chars=DEFAULT_RAND_STR_CHARS):
 
 
 def occurence_vector(text, patterns):
-    """Return a binary vector that represents the occurrences of each regexp groups in order
+    """Search for the occurrences of grpattern, which should be composed of groups(or'ed patterns).
     
-    Search for the occurrences of grpattern, which should be composed of groups(or'ed patterns).
-   
+    Return a binary vector that represents the occurrences of each regexp groups in order
+    
     """
     vector = []
     regexes = [re.compile(r'%s' % pattern) for pattern in patterns]
@@ -48,8 +50,6 @@ def occurence_vector(text, patterns):
 
 def cosine_similarity(v1, v2):
     """Return cosine similarity for two binary vectors."""
-    from numpy import dot
-    from numpy.linalg import norm
     assert len(v1) == len(v2)
     return float(dot(v1,v2) / (norm(v1) * norm(v2)))
 

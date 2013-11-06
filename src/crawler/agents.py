@@ -144,7 +144,7 @@ class HeadlessAgent(CrawlAgent):
         self.type = 'lazy' # lazy will only visit homepages, clicker will click links on the page 
         self.main_js = cm.CASPER_JS_LAZY_HOMEPAGER # JS that PhantomJS will execute - first parameter
         self.timeout = 90 # time to wait before killing the browser process
-        self.screenshot = True # take a screenshot or not
+        self.screenshot = False # take a screenshot or not
         self.casper_client_js = 'NO_CLIENT_JS' # casper should not load any client scripts
         self.post_visit_func = lp.parse_log_dump_results # worker function that will run after visit 
         super(HeadlessAgent, self).__init__()
