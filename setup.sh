@@ -55,8 +55,8 @@ cd bins
 mkdir phantomjs
 cd phantomjs
 wget "https://github.com/fpdetective/phantomjs/releases/download/v1.9/phantomjsm$bits.tar.gz"
-mv "phantomjs/phantomjs" "phantomjs/phantomjs$bits"
 tar -xzf "phantomjsm$bits.tar.gz"
+mv "phantomjs/phantomjs" "phantomjs/phantomjs$bits"
 sudo rm -f "phantomjsm$bits.tar.gz"
 
 # chromium
