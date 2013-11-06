@@ -15,12 +15,20 @@ sudo apt-get -y upgrade
 # Install required packages
 sudo apt-get install --yes --force-yes python python2.7-dev python-pyasn1 libxml2-dev libxslt1-dev python-setuptools python-mysqldb screen libxss-dev xvfb chromium-browser
 sudo easy_install pip
+sudo pip install numpy
 sudo pip install mitmproxy
 sudo pip install pyOpenssl
 sudo pip install selenium
 
 # Create symbolic link
 ln -s `pwd` ~/fpbase
+
+# add alias
+echo alias follow_fp_log='tail -f ~/fpbase/run/logs/latest' >> ~/.bashrc
+echo alias go_latest_job='cd ~/fpbase/run/jobs/latest' >> ~/.bashrc
+echo alias go_fp_src='cd ~/fpbase/src/crawler' >> ~/.bashrc
+echo alias close_html='go_fp_src;python log_parser.py --close_index ~/fpbase/run/jobs/latest/' >> ~/.bashrc
+source ~/.bashrc
 
 # Install mysql server and phpmyadmin preventing password propmt by setting password beforehand ('fpdetective')
 echo 'mysql-server-5.5 mysql-server/root_password password fpdetective' | sudo debconf-set-selections
@@ -78,6 +86,7 @@ mkdir chromedriver
 cd chromedriver
 wget "http://chromedriver.storage.googleapis.com/2.5/chromedriver_linux$bits.zip"
 unzip "chromedriver_linux$bits.zip"
+mv chromedriver "chromedriver$bits"
 sudo rm -f "chromedriver_linux$bits.zip"
 
 cd ..
