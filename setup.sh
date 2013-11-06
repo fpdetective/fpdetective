@@ -15,6 +15,7 @@ sudo apt-get -y upgrade
 # Install required packages
 sudo apt-get install --yes --force-yes python python2.7-dev python-pyasn1 libxml2-dev libxslt1-dev python-setuptools python-mysqldb screen libxss-dev xvfb chromium-browser
 sudo easy_install pip
+sudo pip install numpy
 sudo pip install mitmproxy
 sudo pip install pyOpenssl
 sudo pip install selenium
