@@ -26,11 +26,11 @@ ln -s `pwd` ~/fpbase
 # Install mysql server and phpmyadmin preventing password propmt by setting password beforehand ('fpdetective')
 sudo echo 'mysql-server-5.5 mysql-server/root_password password fpdetective' | sudo debconf-set-selections
 sudo echo 'mysql-server-5.5 mysql-server/root_password_again password fpdetective' | sudo debconf-set-selections
-sudo echo 'phpmyadmin phpmyadmin/dbconfig-install boolean true' | debconf-set-selections
-sudo echo 'phpmyadmin phpmyadmin/app-password-confirm password fpdetective' | debconf-set-selections
-sudo echo 'phpmyadmin phpmyadmin/mysql/admin-pass password fpdetective' | debconf-set-selections
-sudo echo 'phpmyadmin phpmyadmin/mysql/app-pass password fpdetective' | debconf-set-selections
-sudo echo 'phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2' | debconf-set-selections
+sudo echo 'phpmyadmin phpmyadmin/dbconfig-install boolean true' | sudo debconf-set-selections
+sudo echo 'phpmyadmin phpmyadmin/app-password-confirm password fpdetective' | sudo debconf-set-selections
+sudo echo 'phpmyadmin phpmyadmin/mysql/admin-pass password fpdetective' | sudo debconf-set-selections
+sudo echo 'phpmyadmin phpmyadmin/mysql/app-pass password fpdetective' | sudo debconf-set-selections
+sudo echo 'phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2' | sudo debconf-set-selections
 sudo apt-get -y install --yes --force-yes apache2 php5 libapache2-mod-php5
 sudo /etc/init.d/apache2 restart
 sudo apt-get -y install --yes --force-yes mysql-server phpmyadmin
