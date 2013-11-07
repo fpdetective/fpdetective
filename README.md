@@ -27,7 +27,7 @@ This may take while depending on your connection.
 * Consult [PhantomJS wiki](https://github.com/ariya/phantomjs/wiki) to learn more about PhantomJS
 
 ### Basic manual for `agents.py`
-Above we give a description of the parameters that are passed to the `agents.py` module.
+Below we give a description of the parameters that are passed to the `agents.py` module.
 * --index_url: path to the file containing the list of URLs to crawl
 * --top: index of the url_file where the crawl will stop
 * --start: index of the url_file where the crawl will start
