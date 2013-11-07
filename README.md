@@ -27,18 +27,18 @@ This may take while depending on your connection.
 * Consult [PhantomJS wiki](https://github.com/ariya/phantomjs/wiki) to learn more about PhantomJS
 
 ### Basic manual for `agents.py`
---index_url: path to the file containing the list of URLs to crawl
---top: index of the url_file where the crawl will stop
---start: index of the url_file where the crawl will start
---type: the agent can be:
-   lazy: uses phantomjs and only visits homepages
-   clicker: uses phantomjs and clicks a number of login-like links
-   chrome_lazy: uses chrome and only visits homepages
-   chrome_clicker: uses chromium and clicks a number of login-like links
-   dnt: visits a page setting the DNT header to True
-   screenshot: visits pages and prints a screenshot to file
---max_proc: maximum number of processes that will run in parallel
---fc_debug: boolean to set the system environment variable that logs the OS font requests
+* --index_url: path to the file containing the list of URLs to crawl
+* --top: index of the url_file where the crawl will stop
+* --start: index of the url_file where the crawl will start
+* --type: the agent can be:
+   * lazy: uses phantomjs and only visits homepages
+   * clicker: uses phantomjs and clicks a number of login-like links
+   * chrome_lazy: uses chrome and only visits homepages
+   * chrome_clicker: uses chromium and clicks a number of login-like links
+   * dnt: visits a page setting the DNT header to True
+   * screenshot: visits pages and prints a screenshot to file
+* --max_proc: maximum number of processes that will run in parallel
+* --fc_debug: boolean to set the system environment variable that logs the OS font requests
 
 
 ### How to make a basic crawl
