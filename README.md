@@ -43,7 +43,7 @@ Above we give a description of the parameters that are passed to the `agents.py`
 
 
 ### How to launch a simple crawl
-As an example, if you want to crawl the Alexa top 100 in lazy mode and using 10 process in parallel, you can follow the following instructions:
+As an example, if you want to crawl the Alexa top 100 in lazy mode and using 10 processes in parallel, you can follow the following instructions:
 
 * Change to the FPDetective base directory: `cd ~/fpbase` 
 * Run agents.py: `python src/crawler/agents.py --url_file run/top-1m.csv --stop 100 --type lazy --max_proc 10`
