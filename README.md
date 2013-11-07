@@ -45,8 +45,8 @@ Below we give a description of the parameters that are passed to the `agents.py`
 ### How to launch a simple crawl
 As an example, if you want to crawl the Alexa top 100 in lazy mode and using 10 processes in parallel, you can follow the following instructions:
 
-* Change to the FPDetective base directory: `cd ~/fpbase` 
-* Run agents.py: `python src/crawler/agents.py --url_file run/top-1m.csv --stop 100 --type lazy --max_proc 10`
+* Change to the FPDetective source directory: `cd ~/fpbase/src/crawler` 
+* Run agents.py: `python agents.py --url_file ~/fpbase/run/top-1m.csv --stop 100 --type lazy --max_proc 10`
 
 Once the crawl is finished, you can check the log in `run/logs/latest` or connect to the DB using Phpmyadmin (the password for the root user is: `fpdetective`).
 
