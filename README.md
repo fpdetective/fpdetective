@@ -29,7 +29,7 @@ This may take while depending on your connection.
 ### Basic manual for `agents.py`
 Below we give a description of the parameters that are passed to the `agents.py` module.
 * --index_url: path to the file containing the list of URLs to crawl
-* --top: index of the url_file where the crawl will stop
+* --stop: index of the url_file where the crawl will stop
 * --start: index of the url_file where the crawl will start
 * --type: the agent can be:
    * lazy: uses phantomjs and only visits homepages
