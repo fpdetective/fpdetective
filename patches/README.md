@@ -18,7 +18,7 @@ ninja -C out/Release chrome
 ```
     git apply --check chromium.patch
 ```
-6. If the check in step 6 fails, revert to exact snapshot used to generate the patch (32.0.1673.0):
+6. If the check in step 5 fails, revert to exact snapshot used to generate the patch (32.0.1673.0):
 ```
     gclient config https://src.chromium.org/chrome/releases/32.0.1673.0
 ```
