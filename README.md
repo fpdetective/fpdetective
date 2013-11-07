@@ -26,6 +26,12 @@ This may take while depending on your connection.
 * Check out recent binary [releases](https://github.com/fpdetective/phantomjs/releases).
 * Consult [PhantomJS wiki](https://github.com/ariya/phantomjs/wiki) to learn more about PhantomJS
 
+### How to make a basic crawl
+As an example, if you want to crawl the Alexa top 100, you can follow the following instructions:
+
+* Change to the FPDetective base directory: `cd ~/fpbase`
+* Run agents.py: `python src/crawler/agents.py --url_file run/top-1m.csv --stop 100 --type lazy --max_proc 10`
+
 ### FPDetective on VM
 You can follow these instructions to set up a VM and use FPDetective independently of the configuration of your operating system:
 
