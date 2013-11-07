@@ -27,6 +27,7 @@ This may take while depending on your connection.
 * Consult [PhantomJS wiki](https://github.com/ariya/phantomjs/wiki) to learn more about PhantomJS
 
 ### Basic manual for `agents.py`
+Above we give a description of the parameters that are passed to the `agents.py` module.
 * --index_url: path to the file containing the list of URLs to crawl
 * --top: index of the url_file where the crawl will stop
 * --start: index of the url_file where the crawl will start
@@ -41,7 +42,7 @@ This may take while depending on your connection.
 * --fc_debug: boolean to set the system environment variable that logs the OS font requests
 
 
-### How to make a basic crawl
+### How to launch a simple crawl
 As an example, if you want to crawl the Alexa top 100 in lazy mode and using 10 process in parallel, you can follow the following instructions:
 
 * Change to the FPDetective base directory: `cd ~/fpbase` 
