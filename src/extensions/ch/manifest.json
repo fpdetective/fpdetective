@@ -1,0 +1,17 @@
+{
+  "name": "FPDetective",
+  "version": "0.1",
+  "description": "FPDetective extension for intercepting HTTP requests",
+  "permissions": ["notifications", "webRequest", "webRequestBlocking", "*://*/*"],
+  "background": {
+    "scripts": ["background.js"]	
+  },
+  "browser_action": {
+    "default_icon": "icon_on16.png"
+  },
+  "icons": { "16": "icon_on16.png",
+	     "16": "icon_off16.png",
+             "48": "icon48.png"},
+  "manifest_version": 2
+}
+
