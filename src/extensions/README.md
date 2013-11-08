@@ -8,16 +8,20 @@ The extension is implemented for Chome (with blocking capability) and Firefox.
 ## Firefox
 
 * If you have cloned the repository, you will already have the extension in the directory `~/fpbase/src/extensions/ff`. Otherwise, you can download it from [here](https://github.com/fpdetective/fpdetective/raw/master/src/extensions/ff/fpdetective.xpi).
-* In order to inatall the extension you have to run firefox and go to Tools > Add-ons
-* Choose "extensions" from the left menu
+* In order to install the extension you have to run firefox and go to Tools > Add-ons
+* Choose "Extensions" from the left menu
 * Go to the tools in the upper-right part of the window and "Install Add-on From File"
-* Select the file `fpdetective.xpi` and accept.
+* Select the file `fpdetective.xpi`.
 * You may need to restart Firefox
 
 ## Chrome
 
-* You can download the Chrome extension from [here](https://github.com/fpdetective/fpdetective/blob/master/src/extensions/ch/ch.crx?raw=true).
-* 
+* If you have cloned the repository, you will already have the extension in the directory `~/fpbase/src/extensions/ch`. Otherwise, you have to download it from [here](https://github.com/fpdetective/fpdetective/blob/master/src/extensions/ch/ch.crx?raw=true) and unzip it.
+* In order to install the extension you have to go to Chrome's Preferences toolbar button and select "Settings"
+* Choose "Extensions" from the left menu
+* Now, click on "Load unpacked extension..."
+* Select the unziped folder if you downloaded the page from here, or select the folder `~/fpbase/src/extensions/ch`.
+* You may need to restart Chrome
 
 ## Manual of Use
 
