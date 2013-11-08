@@ -26,13 +26,13 @@ Please keep in mind that the extensions are not tested extensively and alpha sta
 
 ## How they work?
 Extensions search for the [URLs of the previously discovered fingerprinting scripts]
-(https://github.com/fpdetective/fpdetective/blob/master/src/crawler/log_parser.py) within the resources 
+(https://github.com/fpdetective/fpdetective/blob/master/src/crawler/fp_regex.py) within the resources 
 loaded by the pages you visit.
 
 The extensions cannot determine if the detected script (or Flash file) is executed or not. 
 So it's technically possible that the scripts detected by the extension were not executed but only served.
 
-## Do extensions report findings to a central server?
+## Do extensions report findings to any parties?
 No. Extensions don't keep any data about your browsing habits and they don't report any information to any
 parties including us.
 
