@@ -1,6 +1,6 @@
 # FPDetective extensions
 
-*DISCLAIMER: these extensions are still being tested!
+* DISCLAIMER: these extensions are still being tested!
 
 In this folder you can find a basic browser extension based on FPDetective framework that can be used to detect known fingerprinting scripts while you are browsing the web.
 The extension is implemented for Chome (with blocking capability) and Firefox.
