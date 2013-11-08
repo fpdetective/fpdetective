@@ -1,5 +1,7 @@
 # FPDetective extensions
 
+*DISCLAIMER: these extensions are still being tested!
+
 In this folder you can find a basic browser extension based on FPDetective framework that can be used to detect known fingerprinting scripts while you are browsing the web.
 The extension is implemented for Chome (with blocking capability) and Firefox.
 
@@ -13,10 +15,11 @@ The extension is implemented for Chome (with blocking capability) and Firefox.
 * Go to the tools in the upper-right part of the window and "Install Add-on From File"
 * Select the file `fpdetective.xpi`.
 * You may need to restart Firefox
+* In order to see the extension's icon you may also need to click on View > Toolbars > Add-on Bar
 
 ## Chrome
 
-* If you have cloned the repository, you will already have the extension in the directory `~/fpbase/src/extensions/ch`. Otherwise, you have to download it from [here](https://github.com/fpdetective/fpdetective/blob/master/src/extensions/ch/ch.crx?raw=true) and unzip it.
+* If you have cloned the repository, you will already have the extension in the directory `~/fpbase/src/extensions/ch`. Otherwise, you have to download it from [here](https://github.com/fpdetective/fpdetective/blob/master/src/extensions/ch/ch.zip?raw=true) and unzip it.
 * In order to install the extension you have to go to Chrome's Preferences toolbar button and select "Settings"
 * Choose "Extensions" from the left menu
 * Now, click on "Load unpacked extension..."
