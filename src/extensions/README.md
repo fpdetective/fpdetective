@@ -9,22 +9,15 @@ The extension is implemented for Chome (with blocking capability) and Firefox.
 
 ## Firefox
 
-* If you have cloned the repository, you will already have the extension in the directory `~/fpbase/src/extensions/ff`. Otherwise, you can download it from [here](https://github.com/fpdetective/fpdetective/raw/master/src/extensions/ff/fpdetective.xpi).
-* In order to install the extension you have to run firefox and go to Tools > Add-ons
-* Choose "Extensions" from the left menu
-* Go to the tools in the upper-right part of the window and "Install Add-on From File"
-* Select the file `fpdetective.xpi`.
-* You may need to restart Firefox
-* In order to see the extension's icon you may also need to click on View > Toolbars > Add-on Bar
+* Install the extension by downloading the [packed file](https://github.com/fpdetective/fpdetective/raw/master/src/extensions/ff/fpdetective.xpi).
 
 ## Chrome
 
-* If you have cloned the repository, you will already have the extension in the directory `~/fpbase/src/extensions/ch`. Otherwise, you have to download it from [here](https://github.com/fpdetective/fpdetective/blob/master/src/extensions/ch/ch.zip?raw=true) and unzip it.
-* In order to install the extension you have to go to Chrome's Preferences toolbar button and select "Settings"
-* Choose "Extensions" from the left menu
-* Now, click on "Load unpacked extension..."
-* Select the unziped folder if you downloaded the page from here, or select the folder `~/fpbase/src/extensions/ch`.
-* You may need to restart Chrome
+* Download the [extension file](https://github.com/fpdetective/fpdetective/blob/master/src/extensions/ch/ch.crx?raw=true).
+* Click the Chrome menu icon ![](https://storage.googleapis.com/support-kms-prod/SNP_2696434_en_v1) on the browser toolbar.
+* Select *Tools > Extensions*.
+* Locate the extension file on your computer and drag the file onto the Extensions page.
+* Review the list of permissions in the dialog that appears. If you would like to proceed, click Install.
 
 ## Manual of Use
 
