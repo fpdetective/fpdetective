@@ -1,9 +1,0 @@
-{
-  "name": "fpdetective",
-  "fullName": "FPDetective extension",
-  "id": "jid1-dpHBAlOtBBQo8Q",
-  "description": "Intercepts HTTP requests and matches with known FP script URLs",
-  "author": "ESAT-COSIC",
-  "license": "MPL 2.0",
-  "version": "0.1"
-}
