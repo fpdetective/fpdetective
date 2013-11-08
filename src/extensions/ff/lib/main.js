@@ -2,6 +2,13 @@ const {Cc, Ci, Cr} = require("chrome");
 const self = require("sdk/self");
 const data = self.data;
 const notif = require("notifications");
+const observerService = Cc["@mozilla.org/observer-service;1"]
+	.getService(Ci.nsIObserverService);
+	
+const ICON = {
+    'on': "icon_on16.png",
+    'off': "icon_off16.png"
+};
 const FINGERPRINTER_REGEX = {
     'lookup.bluecava.com': "BLUECAVA",
     'ds.bluecava.com/v50/AC/BCAC': "BLUECAVA",
@@ -27,73 +34,73 @@ const FINGERPRINTER_REGEX = {
     'virwox.com/affiliate_tracker.js': "VIRWOX",
     'http://www.isingles.co.uk/js/fprint/_core.js': "ISINGLES"
 };
+
 var TOGGLE = true;
 
 // Interface
 // ------------------------------------------------------------------
-
+// Show a toast-like notification
 // Create a widget, and attach the panel to it, so the panel is
 // shown when the user clicks the widget.
 var widget = require("sdk/widget").Widget({
     label: "FPDetectiveExtension",
     id: "fpd-panel",
-    contentURL: data.url("icon_on16.png"),
+    contentURL: data.url(ICON['on']),
     onClick: function () {
         TOGGLE = !TOGGLE;
         if (TOGGLE) {
-            widget.contentURL = data.url("icon_on16.png");
+            notify_and_change_icon("FPDetective extension enabled.", ICON['on']);
         } else {
-            widget.contentURL = data.url("icon_off16.png");
+            notify_and_change_icon("FPDetective extension disabled.", ICON['off']);
         }
     }
 });
 
-// ------------------------------------------------------------------
-
-// Initialize observer service
-var observerService = Cc["@mozilla.org/observer-service;1"].getService(Ci.nsIObserverService);
-
-function TracingListener() {
-    this.originalListener = null;
-}
-
-// Request observer
-var httpRequestObserver = {
-    observe: function (aSubject, aTopic, aData) {
-        var httpChannel = aSubject.QueryInterface(Ci.nsIHttpChannel);
-        if ("http-on-modify-request" == aTopic) {
-            var url = httpChannel.originalURI.spec;
-            if (TOGGLE) {
-                for (var reg_str in FINGERPRINTER_REGEX) {
-                    // Build reg expression
-                    var re = new RegExp(reg_str, "g");
-                    if (url.match(re)) {
-						notif.notify({
-                            title: "FPDetective: FP script detected",
-                            text: "A FP script by " + FINGERPRINTER_REGEX[reg_str] + " has been detected: " + url
-                        });
-                        //aSubject.cancel(Cr.NS_BINDING_ABORTED); // Cancel request TODO: fix if uncommented notification won't pop up!
-						return;
-                    }
-                }
-            }
-        }
-    },
-    QueryInterface: function (aIID) {
-        if (aIID.equals(Ci.nsIObserver) || aIID.equals(Ci.nsISupports)) {
-            return this;
-        }
-        throw Cr.NS_NOINTERFACE;
-    }
+var notify = function (notif_msg) {
+    notif.notify({
+        title: "FPDetective",
+        text: notif_msg
+    });
 };
 
+// Notify and change extension's icon
+var notify_and_change_icon = function(notif_msg, new_icon) {
+    notify(notif_msg);
+    widget.contentURL = data.url(new_icon);
+};
 
-// Register service
-observerService.addObserver(httpRequestObserver,
-    "http-on-modify-request", false);
-
+// Main function
+// ------------------------------------------------------------------
 exports.main = function () {
-    console.log("FPDetective addon is running...");
+	// Define HTTP requests observer
+	var httpRequestObserver = {
+		// Return true if a FP script is detected in an HTTP request, false otherwise
+		observe: function (aSubject, aTopic, aData) {
+		    var httpChannel = aSubject.QueryInterface(Ci.nsIHttpChannel);
+		    if (TOGGLE && "http-on-modify-request" == aTopic) {
+		        var url = httpChannel.originalURI.spec;
+		        for (var reg_str in FINGERPRINTER_REGEX) {
+		            // Build reg expression
+		            var re = new RegExp(reg_str, "g");
+		            if (url.match(re)) {
+		                notify("A FP script by " + FINGERPRINTER_REGEX[reg_str] + " has been detected: " + url);
+		                return true;
+		            }
+		        }
+		    }
+			return false;
+		},
+		QueryInterface: function (aIID) {
+		    if (aIID.equals(Ci.nsIObserver) || aIID.equals(Ci.nsISupports)) {
+		        return this;
+		    }
+		    throw Cr.NS_NOINTERFACE;
+		}
+	};
+
+	// Register service
+	observerService.addObserver(httpRequestObserver,
+	    "http-on-modify-request", false);
 };
 
 // Unload addon event
