@@ -1,6 +1,5 @@
 fpdetective
 ===========
-STILL UNDER CONSTRUCTION!
 
 A framework for conducting large scale web privacy studies.
 
