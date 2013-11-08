@@ -20,37 +20,40 @@ This may take while depending on your connection.
 
 ## Get Started
 * Check [documentation](https://github.com/fpdetective/fpdetective/wiki)
+* Read the paper: [FPDetective: Dusting the Web for Fingerprinters (CCS 2013)](https://www.cosic.esat.kuleuven.be/publications/article-2334.pdf)
 * Visit [FPDetective website](https://www.cosic.esat.kuleuven.be/fpdetective/).
 * Instructions for [using FPDetective with a VM](https://github.com/fpdetective/fpdetective/blob/master/vm/README.md)
 * Check out recent binary [releases](https://github.com/fpdetective/phantomjs/releases).
 * Check out the FPDetective browser [extensions](https://github.com/fpdetective/fpdetective/tree/master/src/extensions).
-* Consult [PhantomJS wiki](https://github.com/ariya/phantomjs/wiki) to learn more about PhantomJS
 
-### Basic manual for `agents.py`
+### Command line parameters
 Below we give a description of the parameters that are passed to the `agents.py` module.
 * --index_url: path to the file containing the list of URLs to crawl
 * --stop: index of the url_file where the crawl will stop
 * --start (optional): index of the url_file where the crawl will start
 * --type: the agent can be:
-   * lazy: uses phantomjs and only visits homepages
-   * clicker: uses phantomjs and clicks a number of login-like links
-   * chrome_lazy: uses chrome and only visits homepages
-   * chrome_clicker: uses chromium and clicks a number of login-like links
-   * dnt: visits a page setting the DNT header to True
-   * screenshot: visits pages and prints a screenshot to file
+   * lazy: uses phantomjs and visits homepages
+   * clicker: uses phantomjs and clicks a number of links
+   * chrome_lazy: uses chrome and visits homepages
+   * chrome_clicker: uses chromium and clicks a number of links
+   * dnt: visits homespages with a DNT header set to 1
+   * screenshot: visits homepages and takes a screenshot
 * --max_proc: maximum number of processes that will run in parallel
 * --fc_debug: boolean to set the system environment variable that logs the OS font requests
 
 
-### How to launch a simple crawl
-As an example, if you want to crawl the Alexa top 100 in lazy mode and using 10 processes in parallel, you can follow the following instructions:
+### How to launch a simple crawl 
+You can use following command to crawl the homepages of Alexa top 100 sites with 
+10 browsers running in parallel:
 
-* Change to the FPDetective source directory: `cd ~/fpbase/src/crawler` 
-* Run agents.py: `python agents.py --url_file ~/fpbase/run/top-1m.csv --stop 100 --type lazy --max_proc 10`
+* Change to the FPDetective source directory: (`~/fpbase/src/crawler`) and run the command:
+```
+python agents.py --url_file ~/fpbase/run/top-1m.csv --stop 100 --type lazy --max_proc 10
+```
 
 Once the crawl is finished, you can check the log in `run/logs/latest` or connect to the DB using Phpmyadmin (the password for the root user is: `fpdetective`).
 
-### FPDetective on VM
+### Using FPDetective with a VM
 You can follow these instructions to set up a VM and use FPDetective independently of the configuration of your operating system:
 
 * [Instructions for setting up VM](https://github.com/fpdetective/fpdetective/wiki/Instructions-for-setting-up-VM)
