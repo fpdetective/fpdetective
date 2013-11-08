@@ -22,7 +22,11 @@ fp_urls = ('http://www.jacklistens.com/websurvey/jslib/pomegranate.js',
          'http://mpsnare/iesnare.com', 
          'http://sl4.analytics-engine.net/detector/fp.js',
          'http://www.web-aupair.net/sites/default/files/fp/fp.js',
-         'http://sl1.analytics-engine.net/fingerprint/add?callback=jsonp138')
+         'http://sl1.analytics-engine.net/fingerprint/add?callback=jsonp138',
+         'http://go.eu.bbelements.com/flash/bbnaut.swf',
+         'http://mp.pianomedia.eu/bucket/novosense.swf',
+         'http://img.alipay.com/common/um/lsa.swf'
+         )
 
 class ParserTest(FPDTest):
     

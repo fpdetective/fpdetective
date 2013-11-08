@@ -7,21 +7,34 @@ import webutils as wu
 import dbutils as dbu
 from fpdtest import FPDTest
 
-class RunningEnvTest(FPDTest):
-    
-    def test_used_binaries(self):
-        bins = (cm.CHROME_MOD_BINARY, cm.PHANTOM_BINARY, cm.PHANTOM_MOD_BINARY, 
-                cm.CASPER_BINARY, cm.CHROME_DRIVER_BINARY)
-        for binary in bins:
-            if not os.path.isfile(binary):
-                self.fail('Cannot find %s' % binary)
-            if not os.access(binary, os.X_OK): # http://stackoverflow.com/questions/377017/test-if-executable-exists-in-python
-                self.fail('Don\t have execution permission for %s' % binary)
+class RunEnvTest(FPDTest):
+               
+    def test_chrome_mod_bin(self):
+        self.should_be_executable(cm.CHROME_MOD_BINARY)
         
-    def test_used_packages(self):
-        packages = ('xvfb-run', 'mitmdump', 'mysql', cm.CHROME_BINARY)
-        for package in packages:
-            self.failUnless(ut.is_installed(package), 'Cannot find %s in your system' % package) 
+    def test_phantom_bin(self):
+        self.should_be_executable(cm.PHANTOM_BINARY)
+        
+    def test_phantom_mod_bin(self):
+        self.should_be_executable(cm.PHANTOM_MOD_BINARY)
+        
+    def test_casper_bin(self):
+        self.should_be_executable(cm.CASPER_BINARY)
+        
+    def test_chrome_driver_bin(self):
+        self.should_be_executable(cm.CHROME_DRIVER_BINARY)
+        
+    def test_xvfb_pkg(self):
+        self.assert_is_installed('xvfb-run')
+ 
+    def test_mitmdump_pkg(self):
+        self.assert_is_installed('mitmdump')
+        
+    def test_mysql_pkg(self):
+        self.assert_is_installed('mysql')
+                
+    def test_chromium_pkg(self):
+        self.assert_is_installed(cm.CHROME_BINARY)
     
     def test_run_dirs(self):
         run_dirs = (cm.BASE_FP_RUN_FOLDER, cm.BASE_FP_JOBS_FOLDER, cm.BASE_FP_LOGS_FOLDER)

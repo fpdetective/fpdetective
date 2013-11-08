@@ -5,6 +5,7 @@ import fileutils as fu
 import agents as ag
 import swfutils as swu
 import dbutils as dbu
+import utils as ut
 import MySQLdb as mdb
 
 DEFAULT_TEST_CRAWL_TIMEOUT = 10
@@ -44,6 +45,9 @@ class FPDTest(unittest.TestCase):
         else:
             self.fail("Didn't raise an assertion error for arguments\
                         with different lengths")
+    
+    def assert_is_installed(self, pkg):
+        self.failUnless(ut.is_installed(pkg), 'Cannot find %s in your system' % pkg)
 
     def assert_is_file(self, filename, msg):
         """Check if file exist."""
@@ -51,6 +55,12 @@ class FPDTest(unittest.TestCase):
     
     def assert_pat_in_file(self, filename, pat):
         self.assertTrue(fu.grep_all_in_file(filename, pat), "Cannot find pattern %s in %s" % (pat, filename)) 
+    
+    def assert_is_executable(self, binary):
+        if not os.path.isfile(binary):
+            self.fail('Cannot find %s' % binary)
+        if not os.access(binary, os.X_OK): # http://stackoverflow.com/questions/377017/test-if-executable-exists-in-python
+            self.fail('Don\'t have execution permission for %s' % binary)
 
     def assert_all_patterns_in_file(self, filename, pats):
         """Assert if all patterns passed are included in the file."""

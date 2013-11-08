@@ -30,7 +30,7 @@ class AgentTest(FPDTest):
     
     def test_logger(self):
         new_logger = partial(ag.logger_fn, wl_log)
-        new_logger('info', 'Can we?')
+        new_logger('info', "I can log, that's nice :)")
         
     def test_prep_base_folder(self):
         ag.prep_run_folder()

@@ -184,6 +184,8 @@ def get_visit_cmd(agent_cfg, proxy_opt, stdout_log, url):
         cmd_line_options = agent_cfg['cmd_line_options']
         caps_name =  stdout_log[:-4] + '.png' if agent_cfg['screenshot'] else 'NO_SCREENSHOT' 
         clientjs = agent_cfg['casper_client_js']
+    
+    # TODO separate cmd construction for chrome and phantomjs
     cmd = 'export FC_DEBUG=%s; %s timeout -k %s %s %s %s %s %s %s %s %s %s' \
         % (agent_cfg['fc_fontdebug'], xvfb, KILL_PROC_AFTER_TIMEOUT, agent_cfg['timeout'], agent_cfg['binary_path'], 
            cmd_line_options, proxy_opt, agent_cfg['main_js'], url, 
