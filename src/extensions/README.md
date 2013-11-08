@@ -23,7 +23,8 @@ describing the provider and the URL of the script. Chrome version also able to b
 * Click Install.
 
 ## How they work?
-Extensions search for the URLs of the previously discovered fingerprinting scripts within the resources 
+Extensions search for the [URLs of the previously discovered fingerprinting scripts]
+(https://github.com/fpdetective/fpdetective/blob/master/src/crawler/log_parser.py) within the resources 
 loaded by the pages you visit. 
 
 ## Do extensions report findings to a central server?
