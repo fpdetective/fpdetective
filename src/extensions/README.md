@@ -1,10 +1,12 @@
 # FPDetective extensions
 
-In this folder you can find browser extensions that can be used to detect known fingerprinting scripts. 
-They're in alpha versions and not tested extensively.  
+You can use following browser extensions to detect fingerprinting scripts, most of which were 
+discovered during our FPDetective study.
 
 The extensions will display a notification when you visit a site that contain a fingerprinting script, 
-describing the provider and the URL of the script. Chrome version also able to block fingerprinting scripts.
+describing the provider and the URL of the script. Chrome extension is also able to block fingerprinting scripts.
+
+Please keep in mind that the extensions are not tested extensively and alpha stage.
 
  
 ## Installation instructions
@@ -25,7 +27,10 @@ describing the provider and the URL of the script. Chrome version also able to b
 ## How they work?
 Extensions search for the [URLs of the previously discovered fingerprinting scripts]
 (https://github.com/fpdetective/fpdetective/blob/master/src/crawler/log_parser.py) within the resources 
-loaded by the pages you visit. 
+loaded by the pages you visit.
+
+The extensions cannot determine if the detected script (or Flash file) is executed or not. 
+So it's technically possible that the scripts detected by the extension were not executed but only served.
 
 ## Do extensions report findings to a central server?
 No. Extensions don't keep any data about your browsing habits and they don't report any information to any
