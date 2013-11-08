@@ -23,6 +23,7 @@ This may take while depending on your connection.
 * Visit [FPDetective website](https://www.cosic.esat.kuleuven.be/fpdetective/).
 * Instructions for [using FPDetective with a VM](https://github.com/fpdetective/fpdetective/blob/master/vm/README.md)
 * Check out recent binary [releases](https://github.com/fpdetective/phantomjs/releases).
+* CHeck out the FPDetective browser [extensions](https://github.com/fpdetective/fpdetective/tree/master/src/extensions).
 * Consult [PhantomJS wiki](https://github.com/ariya/phantomjs/wiki) to learn more about PhantomJS
 
 ### Basic manual for `agents.py`
