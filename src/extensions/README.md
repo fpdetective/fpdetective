@@ -13,12 +13,12 @@ Please keep in mind that the extensions are not tested extensively and alpha sta
 
 ## Firefox
 
-* Download the [extension](https://github.com/fpdetective/fpdetective/raw/master/src/extensions/firefox/fpdetective.xpi).
+* Download the [extension](https://github.com/fpdetective/fpdetective/blob/master/src/extensions/firefox/fpdetective.xpi?raw=true).
 * Click Install.
 * You may need to click on *View > Toolbars > Add-on Bar* to show the add-on's icon.
 
 ## Chrome
-* Download the [extension](https://github.com/fpdetective/fpdetective/blob/master/src/extensions/chrome/ch.crx?raw=true).
+* Download the [extension](https://github.com/fpdetective/fpdetective/blob/master/src/extensions/chrome/chrome.crx?raw=true).
 * Click the Chrome menu icon at the right top.
 * Select *Tools > Extensions*.
 * Locate the extension file on your computer and drag the file onto the Extensions page.
