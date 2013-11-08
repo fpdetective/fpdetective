@@ -10,6 +10,8 @@ The extension is implemented for Chome (with blocking capability) and Firefox.
 ## Firefox
 
 * Install the extension by downloading the [packed file](https://github.com/fpdetective/fpdetective/raw/master/src/extensions/ff/fpdetective.xpi).
+* Review the list of permissions in the dialog that appears. If you would like to proceed, click Install.
+* You may need to click on *View > Toolbars > Add-on Bar* to show the add-on's icon.
 
 ## Chrome
 
