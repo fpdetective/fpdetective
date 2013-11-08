@@ -24,7 +24,7 @@ This may take while depending on your connection.
 * Visit [FPDetective website](https://www.cosic.esat.kuleuven.be/fpdetective/).
 * Instructions for [using FPDetective with a VM](https://github.com/fpdetective/fpdetective/blob/master/vm/README.md)
 * Check out recent binary [releases](https://github.com/fpdetective/phantomjs/releases).
-* Check out the FPDetective browser [extensions](https://github.com/fpdetective/fpdetective/tree/master/src/extensions).
+* Check out the FPDetective browser [extensions](https://github.com/fpdetective/fpdetective/blob/master/extensions/).
 
 ### Command line parameters
 Below we give a description of the parameters that are passed to the `agents.py` module.
