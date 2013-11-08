@@ -7,7 +7,8 @@ The extension is implemented for Chome (with blocking capability) and Firefox.
 
 ## Firefox
 
-You can download the Firefox extension from [here](https://github.com/fpdetective/fpdetective/raw/master/src/extensions/ff/fpdetective.xpi).
+* If you have cloned the repository, you will already have the extension in the directory `~/fpbase/src/extensions/ff`. Otherwise, you can download it from [here](https://github.com/fpdetective/fpdetective/raw/master/src/extensions/ff/fpdetective.xpi).
+* 
 
 ## Chrome
 
