@@ -73,13 +73,11 @@ chrome.webRequest.onBeforeRequest.addListener(
             	var re = new RegExp(reg_str, "g");
             	if (details.url.match(re)) {
                     // Notify the user
-                    shownotify("FP script detected and blocked: " + details.url);
-                    return {
-                        cancel: true
-                    };
+                    shownotify("FP script detected: " + details.url);
+                    return;
 	    		}
             }
         }
     }, 
-  { urls: ["*://*/*"] }, ["blocking"]
+  { urls: ["*://*/*"] }
 );
