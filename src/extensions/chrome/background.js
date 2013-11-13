@@ -30,7 +30,7 @@ const FINGERPRINTER_REGEX = {
     '.bbelements.com.*flash/bbnaut.swf': "BBELEMENTS",
     'pianomedia.eu.*novosense.swf': "PIANOMEDIA",
     'alipay.com.*lsa.swf': "ALIPAY"
-  
+   
 };
 
 var TOGGLE = true;
