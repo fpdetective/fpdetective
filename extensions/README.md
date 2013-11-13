@@ -17,7 +17,7 @@ Please keep in mind that the extensions are not tested extensively and in alpha 
 * You may need to click on *View > Toolbars > Add-on Bar* to show the add-on's icon.
 
 ## Chrome
-* Download the [extension](https://github.com/fpdetective/fpdetective/blob/master/extensions/chrome.crx?raw=true).
+* Download the [extension](https://github.com/fpdetective/fpdetective/blob/master/extensions/fpdetective.crx?raw=true).
 * Click the Chrome menu icon at the right top.
 * Select *Tools > Extensions*.
 * Locate the extension file on your computer and drag the file onto the Extensions page.
