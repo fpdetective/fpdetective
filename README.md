@@ -56,7 +56,7 @@ Once the crawl is finished, you can check the log in `run/logs/latest` or connec
 ### Using FPDetective with a VM
 You can follow these instructions to set up a VM and use FPDetective independently of the configuration of your operating system:
 
-* [Instructions for setting up VM](https://github.com/fpdetective/fpdetective/wiki/Instructions-for-setting-up-VM)
+* [Instructions for setting up VM](https://github.com/fpdetective/fpdetective/blob/master/vm/README.md)
 
 ### Patches for Chromium & PhantomJS browser
 You can use following patches to build modified Chromium and PhantomJS browsers from source. Please consult the [instructions](https://github.com/fpdetective/fpdetective/blob/master/patches/README.md) for further explanation.
