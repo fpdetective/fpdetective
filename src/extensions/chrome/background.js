@@ -26,7 +26,11 @@ const FINGERPRINTER_REGEX = {
     'analyticsengine.s3.amazonaws.com/archive/fingerprint.compiled.js': "ANALYTICSPROS",
     'dscke.suncorp.com.au/datastream-web/resources/js/fp/fontlist-min.js': "AAMI",
     'virwox.com/affiliate_tracker.js': "VIRWOX",
-    'http://www.isingles.co.uk/js/fprint/_core.js': "ISINGLES"
+    'http://www.isingles.co.uk/js/fprint/_core.js': "ISINGLES",
+    '.bbelements.com.*flash/bbnaut.swf': "BBELEMENTS",
+    'pianomedia.eu.*novosense.swf': "PIANOMEDIA",
+    'alipay.com.*lsa.swf': "ALIPAY"
+   
 };
 
 var TOGGLE = true;
@@ -73,13 +77,11 @@ chrome.webRequest.onBeforeRequest.addListener(
             	var re = new RegExp(reg_str, "g");
             	if (details.url.match(re)) {
                     // Notify the user
-                    shownotify("FP script detected and blocked: " + details.url);
-                    return {
-                        cancel: true
-                    };
+                    shownotify("FP script detected: " + details.url);
+                    return;
 	    		}
             }
         }
     }, 
-  { urls: ["*://*/*"] }, ["blocking"]
+  { urls: ["*://*/*"] }
 );
