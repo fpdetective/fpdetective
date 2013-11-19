@@ -11,9 +11,9 @@ const ICON = {
 };
 const FINGERPRINTER_REGEX = {
     'lookup.bluecava.com': "BLUECAVA",
-    'ds.bluecava.com/v50/AC/BCAC': "BLUECAVA",
+    'ds.bluecava.com': "BLUECAVA",
     'inside-graph.com/ig.js': "INSIDEGRAPH",
-    'h.online-metrix.net': "THREATMETRIX",
+    'online-metrix.net': "THREATMETRIX",
     'mpsnare.iesnare.com': "IOVATION",
     'device.maxmind.com': "MAXMIND",
     'maxmind.com/app/device.js': "MAXMIND",
@@ -32,10 +32,11 @@ const FINGERPRINTER_REGEX = {
     'analyticsengine.s3.amazonaws.com/archive/fingerprint.compiled.js': "ANALYTICSPROS",
     'dscke.suncorp.com.au/datastream-web/resources/js/fp/fontlist-min.js': "AAMI",
     'virwox.com/affiliate_tracker.js': "VIRWOX",
-    'http://www.isingles.co.uk/js/fprint/_core.js': "ISINGLES",
-    '.bbelements.com.*flash/bbnaut.swf': "BBELEMENTS",
+    'isingles.co.uk/js/fprint/_core.js': "ISINGLES",
+    'bbnaut.swf': "BBELEMENTS",
     'pianomedia.eu.*novosense.swf': "PIANOMEDIA",
-    'alipay.com.*lsa.swf': "ALIPAY"
+    '(alipay|alibaba).*lsa.swf': "ALIPAY",
+    'mercadoli[b|v]re.*dpe-.*swf': "MERCADOLIBRE"
 };
 
 var TOGGLE = true;

@@ -25,7 +25,11 @@ fp_urls = ('http://www.jacklistens.com/websurvey/jslib/pomegranate.js',
          'http://sl1.analytics-engine.net/fingerprint/add?callback=jsonp138',
          'http://go.eu.bbelements.com/flash/bbnaut.swf',
          'http://mp.pianomedia.eu/bucket/novosense.swf',
-         'http://img.alipay.com/common/um/lsa.swf'
+         'http://img.alipay.com/common/um/lsa.swf',
+         'https://login.alibaba.com/flash/lsa.swf?random=0.7928167176432908',
+         'https://mldp.mercadolibre.com.ar/dpe-0.1.swf?dps=501234561234561234561234',
+         'https://mldp.mercadolibre.com.ar/dpe-0.2.swf?dps=526546546546546546546546'
+         
          )
 
 class ParserTest(FPDTest):
