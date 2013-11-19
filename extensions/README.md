@@ -3,7 +3,7 @@
 You can use following browser extensions to detect fingerprinting scripts, most of which were 
 discovered during our FPDetective study.
 
-The extensions will display a notification when you visit a site that contains a fingerprinting script.
+The extensions will display a notification when you visit a page that has a fingerprinting script or obje.
 
 Please keep in mind that the extensions are not tested extensively and in alpha stage.
 
