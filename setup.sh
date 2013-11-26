@@ -19,6 +19,7 @@ sudo pip install numpy
 sudo pip install mitmproxy
 sudo pip install pyOpenssl
 sudo pip install selenium
+sudo pip install simplejson
 
 # Create symbolic link
 ln -s `pwd` ~/fpbase
