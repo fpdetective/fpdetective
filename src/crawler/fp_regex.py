@@ -1,4 +1,3 @@
-
 BLUECAVA = 1
 INSIDEGRAPH = 2
 THREATMETRIX = 3
@@ -21,6 +20,7 @@ BBELEMENTS = 19
 PIANOMEDIA = 20
 ALIBABA = 21
 MERCADOLIBRE = 22
+LIGATUS = 23
 
 FINGERPRINTER_REGEX = {'(lookup|ds|collective|clients)\.bluecava.com': BLUECAVA,
                          'inside-graph\.com/ig\.js': INSIDEGRAPH,
@@ -45,5 +45,7 @@ FINGERPRINTER_REGEX = {'(lookup|ds|collective|clients)\.bluecava.com': BLUECAVA,
                          '(ibillboard|bbelements).*bbnaut\.swf': BBELEMENTS,
                          'pianomedia\.eu.*novosense\.swf': PIANOMEDIA,
                          'ali(pay|baba).*lsa.swf': ALIBABA,
-                         'mercadoli[b|v]re.*dpe-.*swf': MERCADOLIBRE                         
+                         'mercadoli[b|v]re.*dpe-.*swf': MERCADOLIBRE,
+                         'ligatus.com.*fingerprint.*js': LIGATUS,
+                         
                          }
