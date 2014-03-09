@@ -8,24 +8,34 @@ from fpdtest import FPDTest
 
 lp.FONT_LOAD_THRESHOLD = 2
 
-fp_urls = ('http://www.jacklistens.com/websurvey/jslib/pomegranate.js', 
+fp_urls = ('http://www.jacklistens.com/websurvey/jslib/pomegranate.js',
         'http://www.myfreecams.com/mfc2/lib/o-mfccore.js?vcc=13666666',
-         'http://tags.master-perf-tools.com/V20test/tagv22.pkmin.js', 
+         'http://tags.master-perf-tools.com/V20test/tagv22.pkmin.js',
          'https://www.privacytool.org/AnonymityChecker/js/fontdetect.js', 
-         'http://device.maxmind.com/js/device.js', 
-         'http://ds.bluecava.com/v50/AC/BCAC5.js', 
+         'http://device.maxmind.com/js/device.js',
+         'http://d2fhjc7xo4fbfa.cloudfront.net/v/1375718497/js/device.js',
+         'http://ds.bluecava.com/v50/AC/BCAC5.js',
+         'http://collective.bluecava.com/?p=deasdfasdasdasdsadasdasd',
+         'http://clients.bluecava.com/data/?p=5423232e-0',
+         'http://lookup.bluecava.com/v2/BCLD2.js?_=1388888888', 
          'http://inside-graph.com/ig.js',
          'https://coinbase.com/assets/application-773afba0b6ee06b45ba4363a99637610.js',
-         'https://d2o7j92jk8qjiw.cloudfront.net/assets/application-773afba0b6ee06b45ba4363a99637610.js' 
-         'http://articlebase.com/sbbpg=sbbShell'
-         'http://h.online-metrix.net/fp/fp.swf', 
-         'http://mpsnare/iesnare.com', 
+         'https://d2o7j92jk8qjiw.cloudfront.net/assets/application-773afba0b6ee06b45ba4363a99637610.js',          
+         'http://articlebase.com/sbbpg=sbbShell',
+         'http://h.online-metrix.net/fp/fp.swf',
+         'https://mpsnare.iesnare.com/stmgwb2.swf',
+         'https://mpsnare.iesnare.com/snare.js',
          'http://sl4.analytics-engine.net/detector/fp.js',
          'http://www.web-aupair.net/sites/default/files/fp/fp.js',
          'http://sl1.analytics-engine.net/fingerprint/add?callback=jsonp138',
          'http://go.eu.bbelements.com/flash/bbnaut.swf',
+         'http://bbcdn-bbnaut.ibillboard.com/server-static-files/bbnaut.swf',
          'http://mp.pianomedia.eu/bucket/novosense.swf',
-         'http://img.alipay.com/common/um/lsa.swf'
+         'http://img.alipay.com/common/um/lsa.swf',
+         'https://login.alibaba.com/flash/lsa.swf?random=0.79778775546546',
+         'https://mldp.mercadolibre.com.ar/dpe-0.1.swf?dps=501234561234561234561234',
+         'https://mldp.mercadolibre.com.ar/dpe-0.2.swf?dps=526546546546546546546546'
+         
          )
 
 class ParserTest(FPDTest):
