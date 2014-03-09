@@ -36,7 +36,7 @@ Below we give a description of the parameters that are passed to the `agents.py`
    * clicker: uses phantomjs and clicks a number of links
    * chrome_lazy: uses chrome and visits homepages
    * chrome_clicker: uses chromium and clicks a number of links
-   * dnt: visits homespages with a DNT header set to 1
+   * dnt: visits homepages with a DNT header set to 1
    * screenshot: visits homepages and takes a screenshot
 * --max_proc: maximum number of processes that will run in parallel
 * --fc_debug: boolean to set the system environment variable that logs the OS font requests
