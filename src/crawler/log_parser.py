@@ -273,7 +273,7 @@ def parse_crawl_log(filename, dump_fun=None, crawl_id=0):
         except KeyboardInterrupt:
             raise
         except Exception as exc:
-            wl_log.critical("Exception while dumping %s: %s" % (domaInfo.url, exc))
+            wl_log.exception("Exception while dumping %s: %s" % (domaInfo.url, exc))
 
                   
 def get_fp_from_reqs(requests):

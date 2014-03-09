@@ -5,6 +5,7 @@ import unittest
 import dbutils as dbu
 from fpdtest import FPDTest
 import log_parser as lp
+import fp_regex as fpr
 import agents as ag
 import shutil
 
@@ -33,7 +34,7 @@ class Test(FPDTest):
         self.domainInfo.num_font_loads = 50
         self.domainInfo.num_offsetWidth_calls = 15
         self.domainInfo.num_offsetHeight_calls = 15
-        self.domainInfo.fp_detected = ['iesnare', 'bluecava']
+        self.domainInfo.fp_detected = [fpr.FINGERPRINTER_REGEX.items()[:2]]
         self.domainInfo.crawl_id = 64654
         self.domainInfo.fpd_logs = ['userAgent', 'appCodeName']
         self.domainInfo.fc_dbg_font_loads = ['Arial', 'Tahoma', 'Georgia', 'someotherfont', '微软雅黑']
@@ -76,6 +77,7 @@ class Test(FPDTest):
         self.assert_db_val_equal(site_info_row, 'num_fc_dbg_font_loads', len(self.domainInfo.fc_dbg_font_loads))
         self.assert_db_val_equal(site_info_row, 'rank', self.domainInfo.rank)
         self.assert_db_val_equal(site_info_row, 'log_complete', self.domainInfo.log_complete)
+        self.assert_db_val_equal(site_info_row, 'fp_detected', ' '.join([str(fp) for fp in self.domainInfo.fp_detected]))
         
         
     def test_add_crawl_job_to_db(self):

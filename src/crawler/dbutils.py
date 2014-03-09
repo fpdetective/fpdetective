@@ -60,7 +60,7 @@ def get_crawl_job_from_db(db_conn, by='id', value=None):
 
 def add_site_info_to_db(doma_info, db_conn):
     return insert_to_db(db_conn, "INSERT INTO site_info VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                  (None, ' '.join(doma_info.requests),   ' '.join(doma_info.responses), doma_info.crawl_id, doma_info.url, " ".join(doma_info.fp_detected), ','.join(doma_info.fc_dbg_font_loads), len(doma_info.fc_dbg_font_loads), doma_info.rank, None, doma_info.log_complete))
+                  (None, ' '.join(doma_info.requests),   ' '.join(doma_info.responses), doma_info.crawl_id, doma_info.url, " ".join([str(fp) for fp in doma_info.fp_detected]), ','.join(doma_info.fc_dbg_font_loads), len(doma_info.fc_dbg_font_loads), doma_info.rank, None, doma_info.log_complete))
     
 
 def add_js_info_to_db(doma_info, db_conn, site_info_id):
