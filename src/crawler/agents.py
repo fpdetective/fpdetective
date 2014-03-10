@@ -223,10 +223,10 @@ def crawl_worker(agent_cfg, url_tuple):
             
         sleep(2) # this will make sure mitmdump is timed out before we start to process the network dump
         if agent_cfg['post_visit_func']: # this pluggable function will parse the logs and do whatever we want
-            agent_cfg['post_visit_func'](stdout_log, crawl_id=agent_cfg['crawl_id'])
+            agent_cfg['post_visit_func'](stdout_log, crawl_id=agent_cfg['crawl_id'], url=url)
             
     except Exception as exc:
-        wl_log.critical('Exception in worker function %s %s' % (url_tuple, exc))
+        wl_log.exception('Exception in worker function %s %s' % (url_tuple, exc))
         
         
 def logger_fn(logger, level, msg):

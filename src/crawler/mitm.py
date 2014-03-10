@@ -72,13 +72,13 @@ def init_mitmproxy(basename, timeout, logging):
 
     return "127.0.0.1:%s " % port if port and pid else ""
 
-def process_dump(log_filename, crawl_id):
+def process_dump(log_filename, crawl_id, url=""):
     basename = log_filename[:-4]
     dirname = os.path.dirname(log_filename)
     store_swfs_todir = functools.partial(store_swfs, dir_path=dirname, prefix=basename)
-    parse_mitm_dump(basename, store_swfs_todir, crawl_id)
+    parse_mitm_dump(basename, store_swfs_todir, crawl_id, url)
     
-def parse_mitm_dump(basename, worker, crawl_id):
+def parse_mitm_dump(basename, worker, crawl_id, url):
     dumpfile = basename +'.dmp'
     wl_log.info("Will parse mitm dump %s for crawl: %s" % (dumpfile, crawl_id))
     requests = []
@@ -100,7 +100,7 @@ def parse_mitm_dump(basename, worker, crawl_id):
     doma_info.requests = requests
     doma_info.responses = responses
     doma_info.crawl_id = crawl_id
-    doma_info.url = ""
+    doma_info.url = url
     doma_info.fc_dbg_font_loads = []
     doma_info.fp_detected = lp.get_fp_from_reqs(requests)
     doma_info.log_complete = 1
@@ -132,7 +132,7 @@ def store_swfs(msg, crawl_id, dir_path='/tmp', prefix='?'):
     referer = msg.request.headers['Referer'][0] if msg.request.headers['Referer'] else ""
     
     if msg.response and msg.response.content:
-        print msg.request.get_url()
+        #print msg.request.get_url()
         if (msg.response.content[:3] in SWF_MAGIC_NUMBERS): # to wide, but decompiler will discard them
             
             swf_hash = ut.hash_text(msg.response.content)

@@ -180,7 +180,7 @@ def origin_to_json_field_name(origin):
 def json_field_name_to_origin(origin):
     return origin.replace('DOT', '.')
          
-def parse_crawl_log(filename, dump_fun=None, crawl_id=0):
+def parse_crawl_log(filename, dump_fun=None, crawl_id=0, url=""):
     """Populate domain info object by parsing crawl log file of a site.
     Call dump function to output dump log.
     
@@ -193,11 +193,7 @@ def parse_crawl_log(filename, dump_fun=None, crawl_id=0):
     domaInfo = DomainInfo()
     
     file_content = fu.read_file(filename)
-    # TODO chromium?
-    url_match = re.search(r"opening url: ([^,]*)", file_content)
-    url = url_match.group(1) if url_match else filename
-        
-    wl_log.info('Parsing log for  %s %s' % (url, filename))
+    wl_log.info('Parsing log for %s %s' % (url, filename))
     
     fonts_by_fc_debug = re.findall(r"Sort Pattern.*$\W+family: \"([^\"]*)", file_content, re.MULTILINE) # match family field of font request (not the matched one) 
     domaInfo.num_offsetWidth_calls = len(re.findall(r"Element::offsetWidth", file_content)) # offset width attempts
@@ -298,13 +294,13 @@ def parse_log_dump_json(filename):
 def parse_log_dump_json_and_html(filename):
     parse_crawl_log(filename, dump_json_and_html)
 
-def parse_log_dump_results(filename, method='db', crawl_id=0):
+def parse_log_dump_results(filename, method='db', crawl_id=0, url=""):
     if method is 'db':
-        parse_crawl_log(filename, insert_domain_info_to_db, crawl_id)
+        parse_crawl_log(filename, insert_domain_info_to_db, crawl_id, url=url)
     elif method is 'json':
-        parse_crawl_log(filename, dump_json_and_html)
+        parse_crawl_log(filename, dump_json_and_html,url=url)
     else:
-        parse_crawl_log(filename, dump_html)
+        parse_crawl_log(filename, dump_html,url=url)
 
 def load_domainfo_from_json_file(json_file):
     """Load JSON file to a domain info."""
