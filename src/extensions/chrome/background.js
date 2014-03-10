@@ -27,7 +27,8 @@ const FINGERPRINTER_REGEX = {
         '(ibillboard|bbelements).*bbnaut\.swf': "BBELEMENTS",
         'pianomedia\.eu.*novosense\.swf': "PIANOMEDIA",
         'ali(pay|baba).*lsa.swf': "ALIBABA",
-        'mercadoli[b|v]re.*dpe-.*swf': "MERCADOLIBRE" 
+        'mercadoli[b|v]re.*dpe-.*swf': "MERCADOLIBRE",
+        'ligatus.com.*fingerprint.*js': "LIGATUS"
 	};
 
 var TOGGLE = true;
