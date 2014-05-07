@@ -11,6 +11,7 @@ import parallelize
 from functools import partial
 import simplejson as json
 import fp_regex as fpr
+from sets import Set
 
 MITM_LOG_EXTENSION = 'mlog' # !!! TODO  remove duplicate definition
 pub_suffix = PublicSuffix()
@@ -194,7 +195,6 @@ def parse_crawl_log(filename, dump_fun=None, crawl_id=0, url=""):
     wl_log.info('Parsing log for %s %s' % (url, filename))
     
     # Read canvas events and print them to log in canvas
-    canvas_log = os.path.join(LOGS_FOLDER, crawl_id + "canvas.log")
     urls_read_from_canvas = Set()
     urls_wrote_to_canvas = Set()
     
