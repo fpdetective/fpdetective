@@ -215,7 +215,7 @@ def parse_crawl_log(filename, dump_fun=None, crawl_id=0, url=""):
     if read and wrote:
         wl_log.info('Found both canvas read and write events in log %s, registering in : %s' % (filename, canvas_log))
         with open(canvas_log, "a+") as f:
-            f.write(" ".join([domaInfo.rank, domaInfo.url]))
+            f.write(" ".join([str(domaInfo.rank), domaInfo.url]))
     
 #     for line in file_content.splitlines():        
 #         if not line.startswith("FPLOG"):
