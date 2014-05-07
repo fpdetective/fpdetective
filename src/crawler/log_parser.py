@@ -199,7 +199,7 @@ def parse_crawl_log(filename, dump_fun=None, crawl_id=0, url=""):
     urls_wrote_to_canvas = Set()
     
     
-    canvas_log = os.path.join(cm.BASE_FP_LOGS_FOLDER, crawl_id + "canvas.log")
+    canvas_log = os.path.join(cm.BASE_FP_LOGS_FOLDER, str(crawl_id) + "canvas.log")
     read, wrote = False
     for read_event in cm.CANVAS_READ_EVENTS:
         if read_event in file_content:
