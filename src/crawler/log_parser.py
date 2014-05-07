@@ -13,12 +13,10 @@ import simplejson as json
 import fp_regex as fpr
 
 MITM_LOG_EXTENSION = 'mlog' # !!! TODO  remove duplicate definition
-
 pub_suffix = PublicSuffix()
-
 FONT_LOAD_THRESHOLD = 30
-
 EXT_LINK_IMG = '<img title="Open in a new tab" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAVklEQVR4Xn3PgQkAMQhDUXfqTu7kTtkpd5RA8AInfArtQ2iRXFWT2QedAfttj2FsPIOE1eCOlEuoWWjgzYaB/IkeGOrxXhqB+uA9Bfcm0lAZuh+YIeAD+cAqSz4kCMUAAAAASUVORK5CYII=" />'
+
 
 class DomainInfo:    
     def __init__(self):        
@@ -195,6 +193,21 @@ def parse_crawl_log(filename, dump_fun=None, crawl_id=0, url=""):
     file_content = fu.read_file(filename)
     wl_log.info('Parsing log for %s %s' % (url, filename))
     
+    # Read canvas events and print them to log in canvas
+    canvas_log = os.path.join(LOGS_FOLDER, crawl_id + "canvas.log")
+    read, wrote = False
+    for read_event in cm.CANVAS_READ_EVENTS:
+        if read_event in file_content:
+            read = True
+            break
+    for write_event in cm.CANVAS_WRITE_EVENTS:
+        if write_event in file_content:
+            wrote = True
+            break
+    if read and write:
+        with open(canvas_log, "a") as f:
+            f.write(domaInfo.rank + " " + url)
+
     fonts_by_fc_debug = re.findall(r"Sort Pattern.*$\W+family: \"([^\"]*)", file_content, re.MULTILINE) # match family field of font request (not the matched one) 
     domaInfo.num_offsetWidth_calls = len(re.findall(r"Element::offsetWidth", file_content)) # offset width attempts
     domaInfo.num_offsetHeight_calls = len(re.findall(r"Element::offsetHeight", file_content)) # offset height attempts
