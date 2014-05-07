@@ -200,7 +200,7 @@ def parse_crawl_log(filename, dump_fun=None, crawl_id=0, url=""):
     
     
     canvas_log = os.path.join(cm.BASE_FP_LOGS_FOLDER, str(crawl_id) + "canvas.log")
-    read, wrote = False
+    read = wrote = False
     for read_event in cm.CANVAS_READ_EVENTS:
         if read_event in file_content:
             read = True
