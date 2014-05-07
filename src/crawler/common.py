@@ -38,18 +38,12 @@ CRAWLER_PY_PATH = join(BASE_FP_SRC_FOLDER, 'crawler.py')
 BASE_TEST_URL_ONLINE = 'http://homes.esat.kuleuven.be/~gacar/phtest/' 
 BASE_TEST_URL = 'file://' + BASE_FP_SRC_FOLDER + '/test/files/' 
 
-EVENT_FILLTEXT = "FillText"
-EVENT_STROKETEXT = "StrokeText"
-EVENT_MEASURETEXT = "MeasureText"
-EVENT_TODATAURL = "ToDataURL"
-EVENT_EXTRACTDATA = "ExtractData"
-EVENT_TOBLOB = "ToBlob"
-EVENT_COOKIE = "Cookie"
-EVENT_FLASH_LSO = "Flash LSO"
-EVENT_LOCALSTORAGE = "localstorage"
-EVENT_INDEXED_DB = "indexedDB"
-EVENT_NEW_VISIT = "NewVisit"
-CANVAS_READ_EVENTS = (EVENT_TODATAURL, EVENT_TOBLOB)
+
+EVENT_FILLTEXT = "CanvasRenderingContext2D    fillText"
+EVENT_STROKETEXT = "CanvasRenderingContext2D    strokeText"
+EVENT_TODATAURL = "HTMLCanvasElement    toDataURL"
+
+CANVAS_READ_EVENTS = (EVENT_TODATAURL)
 CANVAS_WRITE_EVENTS = (EVENT_FILLTEXT, EVENT_STROKETEXT)
 
 
