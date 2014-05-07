@@ -210,7 +210,7 @@ def parse_crawl_log(filename, dump_fun=None, crawl_id=0, url=""):
             wrote = True
             break
 
-    if read and write:
+    if read and wrote:
         with open(canvas_log, "a") as f:
             f.write(" ".join([domaInfo.rank, domaInfo.url, event_url]))
     
