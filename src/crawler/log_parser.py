@@ -195,18 +195,24 @@ def parse_crawl_log(filename, dump_fun=None, crawl_id=0, url=""):
     
     # Read canvas events and print them to log in canvas
     canvas_log = os.path.join(LOGS_FOLDER, crawl_id + "canvas.log")
-    read, wrote = False
-    for read_event in cm.CANVAS_READ_EVENTS:
-        if read_event in file_content:
-            read = True
-            break
-    for write_event in cm.CANVAS_WRITE_EVENTS:
-        if write_event in file_content:
-            wrote = True
-            break
-    if read and write:
-        with open(canvas_log, "a") as f:
-            f.write(domaInfo.rank + " " + url)
+    urls_read_from_canvas = Set()
+    urls_wrote_to_canvas = Set()
+    
+    for line in file_content.splitlines():        
+        if not line.startswith("FPLOG"):
+            continue
+        event_url = line.split()[-1]
+        for read_event in cm.CANVAS_READ_EVENTS:
+            if read_event in line:
+                urls_read_from_canvas.add(event_url)
+        for write_event in cm.CANVAS_WRITE_EVENTS:
+            if write_event in line:
+                urls_wrote_to_canvas.add(event_url)
+    
+    with open(canvas_log, "a") as f:
+        f.write("rank" + ";" + "visit_url" + ";" + "rw_event_url")
+        for event_url in list(urls_read_from_canvas & urls_wrote_to_canvas):
+            f.write(domaInfo.rank + ";" + domaInfo.url + ";" + event_url)
 
     fonts_by_fc_debug = re.findall(r"Sort Pattern.*$\W+family: \"([^\"]*)", file_content, re.MULTILINE) # match family field of font request (not the matched one) 
     domaInfo.num_offsetWidth_calls = len(re.findall(r"Element::offsetWidth", file_content)) # offset width attempts
