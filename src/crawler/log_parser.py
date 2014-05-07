@@ -212,9 +212,6 @@ def parse_crawl_log(filename, dump_fun=None, crawl_id=0, url=""):
             wrote = True
             break
 
-    with open(canvas_log, "a+") as f:
-        f.write("\n\n\n".join([file_content, read_event, write_event, str(read), str(wrote)]))
-
     if read and wrote:
         wl_log.info('Found both canvas read and write events in log %s, registering in : %s' % (filename, canvas_log))
         with open(canvas_log, "a+") as f:
