@@ -193,45 +193,6 @@ def parse_crawl_log(filename, dump_fun=None, crawl_id=0, url=""):
     
     file_content = fu.read_file(filename)
     wl_log.info('Parsing log for %s %s' % (url, filename))
-    
-    # Read canvas events and print them to log in canvas
-    urls_read_from_canvas = Set()
-    urls_wrote_to_canvas = Set()
-    
-    
-    canvas_log = os.path.join(cm.BASE_FP_LOGS_FOLDER, str(crawl_id) + "canvas.log")
-    
-    read = wrote = False
-    lower_content = file_content.lower()
-    for read_event in cm.CANVAS_READ_EVENTS:
-        if read_event.lower() in lower_content:
-            read = True
-            break
-    for write_event in cm.CANVAS_WRITE_EVENTS:
-        if write_event.lower() in lower_content:
-            wrote = True
-            break
-
-    if read and wrote:
-        wl_log.info('Found both canvas read and write events in log %s, registering in : %s' % (filename, canvas_log))
-        with open(canvas_log, "a+") as f:
-            f.write(" ".join([str(domaInfo.rank), domaInfo.url]))
-    
-#     for line in file_content.splitlines():        
-#         if not line.startswith("FPLOG"):
-#             continue
-#         event_url = line.split()[-1]
-#         for read_event in cm.CANVAS_READ_EVENTS:
-#             if read_event in line:
-#                 urls_read_from_canvas.add(event_url)
-#         for write_event in cm.CANVAS_WRITE_EVENTS:
-#             if write_event in line:
-#                 urls_wrote_to_canvas.add(event_url)
-#     
-#     with open(canvas_log, "a") as f:
-#         f.write("rank" + ";" + "visit_url" + ";" + "rw_event_url")
-#         for event_url in list(urls_read_from_canvas & urls_wrote_to_canvas):
-#             f.write(domaInfo.rank + ";" + domaInfo.url + ";" + event_url)
 
     fonts_by_fc_debug = re.findall(r"Sort Pattern.*$\W+family: \"([^\"]*)", file_content, re.MULTILINE) # match family field of font request (not the matched one) 
     domaInfo.num_offsetWidth_calls = len(re.findall(r"Element::offsetWidth", file_content)) # offset width attempts
@@ -300,6 +261,28 @@ def parse_crawl_log(filename, dump_fun=None, crawl_id=0, url=""):
     domaInfo.rank = get_rank_domain_from_filename(filename)[0]  # !!! rank may not be right. It's only true if we make top Alexa crawl.
     domaInfo.log_filename = filename
     domaInfo.crawl_id = crawl_id
+    
+        
+    # Read canvas events and print them to log in canvas
+    urls_read_from_canvas = Set()
+    urls_wrote_to_canvas = Set()
+
+    canvas_log = os.path.join(cm.BASE_FP_LOGS_FOLDER, str(crawl_id) + "canvas.log")
+    read = wrote = False
+    lower_content = file_content.lower()
+    for read_event in cm.CANVAS_READ_EVENTS:
+        if read_event.lower() in lower_content:
+            read = True
+            break
+    for write_event in cm.CANVAS_WRITE_EVENTS:
+        if write_event.lower() in lower_content:
+            wrote = True
+            break
+
+    if read and wrote:
+        wl_log.info('Found both canvas read and write events in log %s, registering in : %s' % (filename, canvas_log))
+        with open(canvas_log, "a+") as f:
+            f.write(" ".join([str(domaInfo.rank), domaInfo.url]))
     
     if dump_fun: # call dump function
         try:
