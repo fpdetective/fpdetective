@@ -39,9 +39,9 @@ BASE_TEST_URL_ONLINE = 'http://homes.esat.kuleuven.be/~gacar/phtest/'
 BASE_TEST_URL = 'file://' + BASE_FP_SRC_FOLDER + '/test/files/' 
 
 
-EVENT_FILLTEXT = "CanvasRenderingContext2D    fillText"
-EVENT_STROKETEXT = "CanvasRenderingContext2D    strokeText"
-EVENT_TODATAURL = "HTMLCanvasElement    toDataURL"
+EVENT_FILLTEXT      = "CanvasRenderingContext2D       fillText"
+EVENT_STROKETEXT    = "CanvasRenderingContext2D       strokeText"
+EVENT_TODATAURL     = "HTMLCanvasElement      toDataURL"
 
 CANVAS_READ_EVENTS = (EVENT_TODATAURL)
 CANVAS_WRITE_EVENTS = (EVENT_FILLTEXT, EVENT_STROKETEXT)
