@@ -47,13 +47,12 @@ unzip top-1m.csv.zip
 sudo rm -f top-1m.csv.zip
 
 # Download browser binaries from git repo
-
 mkdir jobs
 mkdir logs
 mkdir bins
 cd bins
 
-#phantom modified
+# Phantom modified
 mkdir phantomjs
 cd phantomjs
 wget "https://github.com/fpdetective/phantomjs/releases/download/v1.9/phantomjsm$bits.tar.gz"
@@ -61,7 +60,7 @@ tar -xzf "phantomjsm$bits.tar.gz"
 mv "phantomjs" "phantomjs"$bits"mod"
 sudo rm -f "phantomjsm$bits.tar.gz"
 
-#phantom
+# Phantom
 wget "https://phantomjs.googlecode.com/files/phantomjs-1.9.2-linux-$machine.tar.bz2"
 tar -xvjf "phantomjs-1.9.2-linux-$machine.tar.bz2"
 mv "phantomjs-1.9.2-linux-$machine/bin/phantomjs" "phantomjs$bits"
@@ -69,13 +68,13 @@ sudo rm -f "phantomjs-1.9.2-linux-$machine.tar.bz2"
 sudo rm -rf "phantomjs-1.9.2-linux-$machine"
 
 
-# chromium
+# Chromium
 cd ..
 wget "https://github.com/fpdetective/phantomjs/releases/download/v1.9/chromium$bits.tar.gz"
 tar -xzf "chromium$bits.tar.gz"
 sudo rm -f "chromium$bits.tar.gz"
 
-# setup chromedriver
+# Setup Chromedriver
 mkdir chromedriver
 cd chromedriver
 wget "http://chromedriver.storage.googleapis.com/2.5/chromedriver_linux$bits.zip"
@@ -97,10 +96,10 @@ sudo rm -f ffdec_1.7.3u2.zip
 
 cd ../..
 
-# add alias
-echo alias follow_fp_log='tail -f ~/fpbase/run/logs/latest' >> ~/.bashrc
-echo alias go_latest_job='cd ~/fpbase/run/jobs/latest' >> ~/.bashrc
-echo alias go_fp_src='cd ~/fpbase/src/crawler' >> ~/.bashrc
+# Add aliases
+echo 'alias follow_fp_log="tail -f ~/fpbase/run/logs/latest"' >> ~/.bashrc
+echo 'alias go_latest_job="cd ~/fpbase/run/jobs/latest"' >> ~/.bashrc
+echo 'alias go_fp_src="cd ~/fpbase/src/crawler"' >> ~/.bashrc
 source ~/.bashrc
 
 echo "The setup script has finished."
