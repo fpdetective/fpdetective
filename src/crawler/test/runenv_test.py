@@ -10,19 +10,19 @@ from fpdtest import FPDTest
 class RunEnvTest(FPDTest):
                
     def test_chrome_mod_bin(self):
-        self.should_be_executable(cm.CHROME_MOD_BINARY)
+        self.assert_is_executable(cm.CHROME_MOD_BINARY)
         
     def test_phantom_bin(self):
-        self.should_be_executable(cm.PHANTOM_BINARY)
+        self.assert_is_executable(cm.PHANTOM_BINARY)
         
     def test_phantom_mod_bin(self):
-        self.should_be_executable(cm.PHANTOM_MOD_BINARY)
+        self.assert_is_executable(cm.PHANTOM_MOD_BINARY)
         
     def test_casper_bin(self):
-        self.should_be_executable(cm.CASPER_BINARY)
+        self.assert_is_executable(cm.CASPER_BINARY)
         
     def test_chrome_driver_bin(self):
-        self.should_be_executable(cm.CHROME_DRIVER_BINARY)
+        self.assert_is_executable(cm.CHROME_DRIVER_BINARY)
         
     def test_xvfb_pkg(self):
         self.assert_is_installed('xvfb-run')
