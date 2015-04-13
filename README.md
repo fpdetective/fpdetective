@@ -9,14 +9,9 @@ A framework for conducting large scale web privacy studies.
 git clone https://github.com/fpdetective/fpdetective.git
 cd fpdetective
 ```
-After that point, you've two options: 
 
-1. Run `./setup.sh` to use FPDetective on your computer
-2. Follow [instructions for setting up VM](https://github.com/fpdetective/fpdetective/blob/master/vm/README.md)
+Then follow [instructions for setting up VM](https://github.com/fpdetective/fpdetective/blob/master/vm/README.md)
 to run FPDetective in a virtual machine
-
-Please note that setup.sh will download browsers and other binaries used by FPDetective. 
-This may take while depending on your connection.
 
 ## Get Started
 * Check [documentation](https://github.com/fpdetective/fpdetective/wiki)
@@ -52,11 +47,6 @@ python agents.py --url_file ~/fpbase/run/top-1m.csv --stop 100 --type lazy --max
 ```
 
 Once the crawl is finished, you can check the log in `run/logs/latest` or connect to the DB using Phpmyadmin (the password for the root user is: `fpdetective`).
-
-### Using FPDetective with a VM
-You can follow these instructions to set up a VM and use FPDetective independently of the configuration of your operating system:
-
-* [Instructions for setting up VM](https://github.com/fpdetective/fpdetective/blob/master/vm/README.md)
 
 ### Patches for Chromium & PhantomJS browser
 You can use following patches to build modified Chromium and PhantomJS browsers from source. Please consult the [instructions](https://github.com/fpdetective/fpdetective/blob/master/patches/README.md) for further explanation.

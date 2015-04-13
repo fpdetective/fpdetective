@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import common as cm
 import fileutils as fu
 import dbutils as dbu
 from log import wl_log
@@ -11,14 +11,13 @@ import parallelize
 from functools import partial
 import simplejson as json
 import fp_regex as fpr
+from sets import Set
 
 MITM_LOG_EXTENSION = 'mlog' # !!! TODO  remove duplicate definition
-
 pub_suffix = PublicSuffix()
-
 FONT_LOAD_THRESHOLD = 30
-
 EXT_LINK_IMG = '<img title="Open in a new tab" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAVklEQVR4Xn3PgQkAMQhDUXfqTu7kTtkpd5RA8AInfArtQ2iRXFWT2QedAfttj2FsPIOE1eCOlEuoWWjgzYaB/IkeGOrxXhqB+uA9Bfcm0lAZuh+YIeAD+cAqSz4kCMUAAAAASUVORK5CYII=" />'
+
 
 class DomainInfo:    
     def __init__(self):        
@@ -194,7 +193,7 @@ def parse_crawl_log(filename, dump_fun=None, crawl_id=0, url=""):
     
     file_content = fu.read_file(filename)
     wl_log.info('Parsing log for %s %s' % (url, filename))
-    
+
     fonts_by_fc_debug = re.findall(r"Sort Pattern.*$\W+family: \"([^\"]*)", file_content, re.MULTILINE) # match family field of font request (not the matched one) 
     domaInfo.num_offsetWidth_calls = len(re.findall(r"Element::offsetWidth", file_content)) # offset width attempts
     domaInfo.num_offsetHeight_calls = len(re.findall(r"Element::offsetHeight", file_content)) # offset height attempts
@@ -262,6 +261,26 @@ def parse_crawl_log(filename, dump_fun=None, crawl_id=0, url=""):
     domaInfo.rank = get_rank_domain_from_filename(filename)[0]  # !!! rank may not be right. It's only true if we make top Alexa crawl.
     domaInfo.log_filename = filename
     domaInfo.crawl_id = crawl_id
+        
+    # Read canvas events and print them to log in canvas
+    urls_read_from_canvas = Set()
+    urls_wrote_to_canvas = Set()
+
+    canvas_log = os.path.join(cm.BASE_FP_LOGS_FOLDER, str(crawl_id) + "canvas.log")
+    read = wrote = False
+    for read_event in cm.CANVAS_READ_EVENTS:
+        if read_event in file_content:
+            read = True
+            break
+    for write_event in cm.CANVAS_WRITE_EVENTS:
+        if write_event in file_content:
+            wrote = True
+            break
+
+    if read and wrote:
+        wl_log.info('Found both canvas read and write events in log %s, registering in : %s' % (filename, canvas_log))
+        with open(canvas_log, "a+") as f:
+            f.write(" ".join([str(domaInfo.rank), domaInfo.url]) + "\n")
     
     if dump_fun: # call dump function
         try:
