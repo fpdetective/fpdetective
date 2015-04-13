@@ -133,7 +133,7 @@ def get_out_filename_from_url(url, prefix, suffix='.txt'):
 def get_base_filename_from_url(url, prefix):
     """Return base filename for the url."""
     dashed = re.sub(r'[\W]', '-', url)
-    return prefix + '-' + re.sub(r'-+', '-', dashed)
+    return '%s-%s' %(prefix, re.sub(r'-+', '-', dashed))
 
     
 def gen_read_urls_from_csv_file(filename):

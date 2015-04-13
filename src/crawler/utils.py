@@ -7,7 +7,7 @@ import operator
 import sys
 import hashlib
 import signal
-from random import choice   
+from random import choice
 from itertools import imap
 from itertools import chain
 from log import wl_log

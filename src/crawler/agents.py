@@ -227,8 +227,8 @@ def crawl_worker(agent_cfg, url_tuple):
             
     except Exception as exc:
         wl_log.exception('Exception in worker function %s %s' % (url_tuple, exc))
-        
-        
+
+
 def logger_fn(logger, level, msg):
     fn = getattr(logger, level) # level is info, debug, critical etc
     fn(msg)
@@ -236,14 +236,13 @@ def logger_fn(logger, level, msg):
 def run_crawl(cr_job):
     cr_agent = cr_job.crawl_agent
     url_tuples = cr_job.url_tuples
-    
+
     # only copy the variables that'll be used by the agent. Parallelization requires picklable variables. 
     cfg_dict = dict([(i, cr_agent.__dict__[i]) for i in \
                      ['fc_fontdebug', 'post_visit_func', 'timeout', 'binary_path', \
                       'use_mitm_proxy', 'mitm_proxy_logs', 'cmd_line_options', 'main_js', \
                       'casper_client_js', 'screenshot', 'job_dir', 'index_html_log', 'type', 'crawl_id'] if i in cr_agent.__dict__])
-    
-    
+
     worker = partial(crawl_worker, cfg_dict)
     
     parallelize.run_in_parallel(url_tuples, worker, cr_job.max_parallel_procs)
