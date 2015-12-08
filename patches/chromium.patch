@@ -52,7 +52,7 @@ Index: Source/core/plugins/DOMMimeTypeArray.cpp
          return 0;
 +
 +#ifdef LOG_MODS_FP
-+    String log_str = String("DOMMimeTypeArray::item-") +  String::number(index);     
++    String log_str = String("DOMMimeTypeArray::item-") +  String::number(index);
 +    logFPCalls(m_frame, log_str);
 +#endif
 +
@@ -189,7 +189,7 @@ Index: Source/core/plugins/DOMPlugin.cpp
  {
 +#ifdef LOG_MODS_FP
 +    logFPCalls(m_frame, String("DOMPlugin::filename: ") + pluginInfo().file);
-+#endif    
++#endif
      return pluginInfo().file;
  }
  
@@ -244,8 +244,8 @@ Index: Source/core/css/CSSFontSelector.cpp
 +#ifdef LOG_MODS_FP
 +    String fontFamName = familyName.string();
 +    if(!fontFamName.startsWith("data:")){
-+    	String log_str = String("CSSFontSelector::getFontData ") + fontFamName;
-+    	logFPCalls(0, log_str,  m_document->url());
++        String log_str = String("CSSFontSelector::getFontData ") + fontFamName;
++        logFPCalls(0, log_str,  m_document->url());
 +    }
 +#endif
 +
@@ -632,7 +632,7 @@ Index: Source/core/frame/NavigatorID.cpp
  String NavigatorID::appName(const NavigatorBase*)
  {
 +#ifdef LOG_MODS_FP
-+    logFPCalls(0, "Navigator::appName");    
++    logFPCalls(0, "Navigator::appName");
 +#endif
      return "Netscape";
  }

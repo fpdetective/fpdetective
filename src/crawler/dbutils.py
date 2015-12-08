@@ -67,7 +67,7 @@ def add_js_info_to_db(doma_info, db_conn, site_info_id):
     return insert_to_db(db_conn, "INSERT INTO js_info VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                   (None, doma_info.rank, doma_info.url, ','.join(doma_info.fonts_loaded), str(doma_info.fonts_by_origins),
                     doma_info.num_font_loads, doma_info.num_offsetWidth_calls, doma_info.num_offsetHeight_calls,
-                    '', int(site_info_id), ','.join(doma_info.fpd_logs), doma_info.crawl_id)) # skip inserting log
+                    '', int(site_info_id), '\t'.join(doma_info.fpd_logs), doma_info.crawl_id)) # skip inserting log
      
 def update_crawl_job(cr_job, db_conn):
     return insert_to_db(db_conn, "UPDATE crawl_job SET num_crawl_urls=%s, max_parallel_procs=%s,\
