@@ -26,3 +26,8 @@ Virtual Machine
 MySQL Database
 * username = `root` 
 * password = `fpdetective`
+
+Some points that can help you to use this marvellous crawler with GUI,
+* Run setup.sh at first. It will install all the reqired libraries and also create run folder.
+* If you don't have casperjs installed, you have to do it manually.
+* if src/crawler/mitm.py gives some error, install mitmproxy and libmproxy with mitmproxy.
